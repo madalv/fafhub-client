@@ -1,7 +1,9 @@
 import axios, {AxiosResponse} from 'axios'
 import {Room} from "../models/Room";
+import {User, UserFormValues} from "../models/User";
 
 axios.defaults.baseURL = 'http://localhost:8080/api'
+axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('jwt')}`
 
 const responseBody = <T> (response: AxiosResponse<T>) => response.data
 
@@ -18,9 +20,15 @@ const Rooms = {
     create: (room: Room) => requests.post(`/rooms`, room),
     update: (room: Room) => requests.put(`/rooms/${room.id}`, room),
     delete: (id: string) => requests.del(`rooms/${id}`)
+}
 
+const Account = {
+    current: () => requests.get<User>(`/users/current`),
+    login: (user: UserFormValues) => requests.post<User>(`users/login`, user),
+    register: (user: UserFormValues) => requests.post<User>(`users/register`, user),
 }
 
 export const agent = {
-    Rooms
+    Rooms,
+    Account
 }
