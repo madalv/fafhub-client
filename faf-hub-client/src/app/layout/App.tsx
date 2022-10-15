@@ -1,25 +1,21 @@
-import React, {useEffect} from "react";
-import {List} from "semantic-ui-react";
-import {useStore} from "../stores/store";
+import React from "react";
 import {observer} from "mobx-react-lite";
+import {Route, Routes} from "react-router-dom";
+import MainDashboard from "../../features/main-dashboard/MainDashboard";
+import RoomDashboard from "../../features/room-dashboard/RoomDashboard";
+import LoginForm from "../../features/login/LoginForm";
 
+// TODO create navbar
 
 const App: React.FC = () => {
-    const {roomStore} = useStore()
-
-    useEffect(() => {
-        roomStore.loadRooms()
-    }, [roomStore])
 
     return (
         <>
-            <List>
-                {roomStore.rooms.map((room) => (
-                    <List.Item key={room.id}>
-                        {room.name}: {room.ownerId}
-                    </List.Item>
-                ))}
-            </List>
+            <Routes>
+                <Route path='/' element={<MainDashboard/>}/>
+                <Route path='/rooms' element={<RoomDashboard/>}/>
+                <Route path='/login' element={<LoginForm/>}/>
+            </Routes>
         </>
     )
 }
