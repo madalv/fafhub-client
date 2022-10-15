@@ -1,16 +1,19 @@
 import React, {useEffect, useState} from "react";
-import axios from "axios";
 import {Room} from "../models/Room";
 import {List} from "semantic-ui-react";
+import {useStore} from "../stores/store";
+import {observer} from "mobx-react-lite";
+import { agent } from "../api/agent"
 
 
 const App: React.FC = () => {
+    const {roomStore} = useStore()
     const [rooms, setRooms] = useState<Room[]>([])
 
     useEffect(() => {
-        axios.get<Room[]>("http://localhost:8080/api/rooms")
+        agent.Rooms.list()
             .then((response) => {
-                setRooms(response.data)
+                setRooms(response)
             })
     }, [])
 
@@ -27,5 +30,5 @@ const App: React.FC = () => {
     )
 }
 
-export default App;
+export default observer(App);
 
