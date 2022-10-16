@@ -8,6 +8,7 @@ import {useStore} from "../stores/store";
 import roomDashboard from "../../features/room-dashboard/RoomDashboard";
 import PageBar from "./PageBar";
 import NavBar from "./NavBar";
+import RegisterForm from "../../features/register/RegisterForm";
 
 
 const App: React.FC = () => {
@@ -32,6 +33,7 @@ const App: React.FC = () => {
                 <Route path='/'  element={ <HomePage/>}/>
                 <Route path='/rooms' element={userStore.isLoggedIn() ? <RoomDashboard/> : <Navigate replace to="/login" />}/>
                 <Route path='/login' element={<LoginForm/>}/>
+                <Route path='/register' element={<RegisterForm/>}/>
             </Routes>
         </>
     )

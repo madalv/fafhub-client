@@ -18,7 +18,6 @@ export default class UserStore {
     }
 
     login = async (creds: UserFormValues) => {
-
         try {
             const token = await agent.Account.login(creds)
             store.commonStore.setToken(token.token)
@@ -45,6 +44,15 @@ export default class UserStore {
             runInAction(() => this.user = user)
         } catch (error) {
             console.log(error)
+        }
+    }
+
+    register = async (creds: UserFormValues) => {
+        try {
+            const user = await agent.Account.register(creds)
+            // TODO redirect to LOGIN Page
+        } catch (error) {
+            throw error
         }
     }
 }
