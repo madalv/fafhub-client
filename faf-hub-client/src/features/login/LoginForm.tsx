@@ -4,9 +4,6 @@ import {Button, Label} from "semantic-ui-react";
 import {useStore} from "../../app/stores/store";
 import {observer} from "mobx-react-lite";
 
-// TODO set current user, redirect to own rooms when logged in
-// TODO prompt for login when accessing any page
-
 
 const LoginForm: React.FC = () => {
 
@@ -31,6 +28,5 @@ const LoginForm: React.FC = () => {
         </Formik>
     )
 }
-
 
 export default observer(LoginForm)

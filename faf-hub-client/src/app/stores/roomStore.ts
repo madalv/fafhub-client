@@ -12,8 +12,8 @@ export default class RoomStore {
 
     loadRooms = async () => {
         try {
-            const rooms = await agent.Rooms.list()
-            this.setRooms(rooms)
+            const user = await agent.Account.current()
+            this.setRooms(user.rooms)
         } catch (error) {
             console.log(error)
         }

@@ -1,7 +1,7 @@
 import React from "react";
 
 
-const MainDashboard: React.FC = () => {
+const HomePage: React.FC = () => {
     return(
         <>
             <h2>I HATE REACT</h2>
@@ -9,4 +9,4 @@ const MainDashboard: React.FC = () => {
     )
 }
 
-export default MainDashboard
+export default HomePage
