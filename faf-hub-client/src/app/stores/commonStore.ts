@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import {makeAutoObservable, reaction} from "mobx";
 
 export default class CommonStore {
@@ -17,19 +16,6 @@ export default class CommonStore {
     }
 
     setToken = (token: string | null) => {
-=======
-import {makeAutoObservable} from "mobx";
-
-export default class CommonStore {
-    token: string | null = null
-
-    constructor() {
-        makeAutoObservable(this)
-    }
-
-    setToken = (token: string | null) => {
-        if (token) window.localStorage.setItem('jwt', token)
->>>>>>> main
         this.token = token
     }
 }

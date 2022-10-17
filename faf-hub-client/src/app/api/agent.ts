@@ -1,7 +1,6 @@
 import axios, {AxiosResponse} from 'axios'
 import {Room} from "../models/Room";
 import {User, UserFormValues} from "../models/User";
-<<<<<<< HEAD
 import {store} from "../stores/store";
 
 axios.defaults.baseURL = 'http://localhost:8080/api'
@@ -15,11 +14,6 @@ axios.interceptors.request.use(config => {
     if (token) config.headers.Authorization = `Bearer ${token}`
     return config;
 })
-=======
-
-axios.defaults.baseURL = 'http://localhost:8080/api'
-axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('jwt')}`
->>>>>>> main
 
 const responseBody = <T> (response: AxiosResponse<T>) => response.data
 

@@ -4,13 +4,6 @@ import {Button, Label} from "semantic-ui-react";
 import {useStore} from "../../app/stores/store";
 import {observer} from "mobx-react-lite";
 
-<<<<<<< HEAD
-=======
-// TODO set current user, redirect to own rooms when logged in
-// TODO prompt for login when accessing any page
-
->>>>>>> main
-
 const LoginForm: React.FC = () => {
 
     const {userStore} = useStore()
@@ -35,8 +28,4 @@ const LoginForm: React.FC = () => {
     )
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> main
 export default observer(LoginForm)
