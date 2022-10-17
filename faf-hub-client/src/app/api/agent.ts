@@ -1,9 +1,25 @@
 import axios, {AxiosResponse} from 'axios'
 import {Room} from "../models/Room";
 import {User, UserFormValues} from "../models/User";
+<<<<<<< HEAD
+import {store} from "../stores/store";
 
 axios.defaults.baseURL = 'http://localhost:8080/api'
 axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('jwt')}`
+axios.defaults.headers.common['Content-Type'] = 'application/json'
+
+
+axios.interceptors.request.use(config => {
+    config.headers = config.headers ?? {}
+    const token = store.commonStore.token
+    if (token) config.headers.Authorization = `Bearer ${token}`
+    return config;
+})
+=======
+
+axios.defaults.baseURL = 'http://localhost:8080/api'
+axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('jwt')}`
+>>>>>>> main
 
 const responseBody = <T> (response: AxiosResponse<T>) => response.data
 
