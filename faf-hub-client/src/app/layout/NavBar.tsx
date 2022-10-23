@@ -1,17 +1,59 @@
-import {observer} from "mobx-react-lite";
+import { observer } from "mobx-react-lite";
 import React from "react";
-import {Link} from "react-router-dom";
-
+import { NavLink } from "react-router-dom";
+import { Image, Menu } from "semantic-ui-react";
+import { useStore } from "../stores/store";
 
 const NavBar: React.FC = () => {
-    return(
-        <>
-            <Link to="/">HomePage</Link>
-            <Link to="/rooms">Rooms</Link>
-        </>
-    )
-}
+  const { userStore } = useStore();
+  return (
+    <>
+      {userStore.isLoggedIn && (
+        <div className="container">
+          <div className="aside">
+            <Image src="/assets/faf.png" />
+            <Menu vertical inverted>
+              <Menu.Item as={NavLink} to="/" className="menuItem" name="main">
+                Main
+              </Menu.Item>
+              <Menu.Item
+                as={NavLink}
+                to="/comunity"
+                className="menuItem"
+                name="comunity"
+              >
+                Comunity
+              </Menu.Item>
+              <Menu.Item
+                as={NavLink}
+                to="/chats"
+                className="menuItem"
+                name="chats"
+              >
+                Chats
+              </Menu.Item>
+              <Menu.Item
+                as={NavLink}
+                to="/rooms"
+                className="menuItem"
+                name="rooms"
+              >
+                Rooms
+              </Menu.Item>
+              <Menu.Item
+                as={NavLink}
+                to="/files"
+                className="menuItem"
+                name="files"
+              >
+                Files
+              </Menu.Item>
+            </Menu>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
 
-
-
-export default observer(NavBar)
+export default observer(NavBar);

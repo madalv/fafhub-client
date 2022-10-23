@@ -1,0 +1,17 @@
+.homePageContainer {
+  height: 100vh;
+  background-color: black;
+  display: grid;
+  place-items: center;
+}
+.logoContainer {
+  width: 35%;
+  height: 45%;
+  display: grid;
+  place-items: center;
+}
+.loginRegisterContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}

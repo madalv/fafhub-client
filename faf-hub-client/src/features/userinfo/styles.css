@@ -1,0 +1,5 @@
+.userInfoContainer {
+  display: flex;
+  column-gap: 1em;
+  color: white;
+}
