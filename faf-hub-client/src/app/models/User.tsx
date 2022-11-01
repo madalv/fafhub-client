@@ -12,6 +12,7 @@ export interface User extends Base {
 export interface UserFormValues {
 	email: string
 	password: string
+	phone?: string
 	firstName?: string
 	lastName?: string
 }

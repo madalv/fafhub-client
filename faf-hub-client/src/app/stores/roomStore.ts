@@ -29,6 +29,7 @@ export default class RoomStore {
       debugger;
       await agent.Rooms.create({ name: roomName });
       store.modalStore.closeModal();
+      await this.loadRooms()
     } catch (error) {
       throw error;
     }

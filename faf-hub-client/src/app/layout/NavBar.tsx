@@ -18,11 +18,11 @@ const NavBar: React.FC = () => {
               </Menu.Item>
               <Menu.Item
                 as={NavLink}
-                to="/comunity"
+                to="/community"
                 className="menuItem"
-                name="comunity"
+                name="community"
               >
-                Comunity
+                Community
               </Menu.Item>
               <Menu.Item
                 as={NavLink}

@@ -2,6 +2,7 @@ import {makeAutoObservable, reaction} from "mobx";
 
 export default class CommonStore {
     token: string | null = window.localStorage.getItem('jwt')
+    isLoaded: boolean = false
 
     constructor() {
         makeAutoObservable(this)
@@ -13,6 +14,10 @@ export default class CommonStore {
                 else window.localStorage.removeItem('jwt')
             }
         )
+    }
+
+    setIsLoaded = (state: boolean) => {
+        this.isLoaded = state
     }
 
     setToken = (token: string | null) => {
