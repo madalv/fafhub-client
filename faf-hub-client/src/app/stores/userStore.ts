@@ -3,6 +3,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 import { agent } from "../api/agent";
 import { store } from "./store";
 import { history } from "../../index";
+import {NavigateFunction, useNavigate} from "react-router-dom";
 
 export default class UserStore {
   user: User | null = null;
@@ -31,8 +32,7 @@ export default class UserStore {
     store.commonStore.setToken(null);
     window.localStorage.removeItem("jwt");
     this.user = null;
-    console.log("Logged out!" + this.user);
-    history.push("/");
+    console.log("Logged out!");
   };
 
   setUser = async () => {
@@ -46,9 +46,10 @@ export default class UserStore {
 
   register = async (creds: UserFormValues) => {
     try {
-      const user = await agent.Account.register(creds);
-      // TODO redirect to LOGIN Page
+      await agent.Account.register(creds);
+      store.modalStore.closeModal();
     } catch (error) {
+      console.log(error)
       throw error;
     }
   };

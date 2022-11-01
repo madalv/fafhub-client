@@ -1,13 +1,15 @@
 import { Button, TextArea } from "semantic-ui-react";
-import NavBar from "../../../app/layout/NavBar";
 import RoomList from "../room-dashboard/RoomList";
 import UserInfo from "../../userinfo/UserInfo";
 import "./styles.css";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../app/stores/store";
 import CreateRoom from "../roomCreationForm/CreateRoom";
+import {useNavigate} from "react-router-dom";
+
 export default observer(function Rooms() {
-  const { modalStore } = useStore();
+  const { modalStore, userStore } = useStore();
+  const navigate = useNavigate()
   return (
     <div className="roomContainer mainSection">
       <div className="roomsHeader">
@@ -15,9 +17,16 @@ export default observer(function Rooms() {
         <Button
           className="roomButton"
           inverted
-          onClick={() => modalStore.openModal(<CreateRoom />)}
-        >
-          +Room
+          onClick={() => modalStore.openModal(<CreateRoom />)}>
+          + Room
+        </Button>
+        <Button
+          className="roomButton"
+          onClick={() => {
+            userStore.logout()
+            navigate("/")
+          }}>
+          Logout
         </Button>
         <UserInfo />
       </div>

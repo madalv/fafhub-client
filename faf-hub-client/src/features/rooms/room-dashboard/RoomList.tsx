@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
-import { Card, List } from "semantic-ui-react";
+import {Card, List, Menu} from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
+import {NavLink} from "react-router-dom";
 
 const RoomList: React.FC = () => {
   const { roomStore } = useStore();
@@ -10,15 +11,13 @@ const RoomList: React.FC = () => {
     roomStore.loadRooms().then();
   }, [roomStore]);
   return (
-    <List>
+    <Menu vertical inverted>
       {roomStore.rooms.map((room) => (
-        <List.Item key={room.id}>
-          <Card>
+        <Menu.Item key={room.id} as={NavLink} className="menuItem">
             {room.name}: {room.ownerId}
-          </Card>
-        </List.Item>
+        </Menu.Item>
       ))}
-    </List>
+    </Menu>
   );
 };
 

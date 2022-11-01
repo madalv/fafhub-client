@@ -7,7 +7,10 @@ import LoginForm from "../login/LoginForm";
 import RegisterForm from "../register/RegisterForm";
 import "./styles.css";
 export default observer(function HomePage() {
-  const { userStore, modalStore } = useStore();
+  const { userStore, modalStore, commonStore } = useStore();
+
+  if (!commonStore.isLoaded) return <div>Loading...</div>
+
   return (
     <div className="homePageContainer">
       <div className="logoContainer">
@@ -15,7 +18,7 @@ export default observer(function HomePage() {
           className="logo"
           src="/assets/faf.png"
           size="massive"
-          style={{ marginBottom: 12 }}
+          style={{ marginBottom: 0 }}
         />
         <div className="loginRegisterContainer">
           {userStore.isLoggedIn ? (

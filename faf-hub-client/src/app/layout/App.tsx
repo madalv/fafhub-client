@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { observer } from "mobx-react-lite";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import {Navigate, Route, Routes, useLocation, IndexRouteObject} from "react-router-dom";
 import HomePage from "../../features/homepage/HomePage";
-import RoomDashboard from "../../features/rooms/room-dashboard/RoomDashboard";
 import { useStore } from "../stores/store";
 import NavBar from "./NavBar";
 import ModalContainer from "../common/modals/ModalContainer";
@@ -14,7 +13,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (commonStore.token) {
-      userStore.setUser().finally();
+      userStore.setUser().then(() => commonStore.setIsLoaded(true))
     }
   }, [commonStore, userStore]);
   return (
