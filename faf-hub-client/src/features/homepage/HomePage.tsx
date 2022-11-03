@@ -7,9 +7,7 @@ import LoginForm from "../login/LoginForm";
 import RegisterForm from "../register/RegisterForm";
 import "./styles.css";
 export default observer(function HomePage() {
-  const { userStore, modalStore, commonStore } = useStore();
-
-  if (!commonStore.isLoaded) return <div>Loading...</div>
+  const { userStore, modalStore } = useStore();
 
   return (
     <div className="homePageContainer">
