@@ -8,7 +8,6 @@ export default observer(function CreateRoom() {
     <Formik
       initialValues={{ name: "", error: null }}
       onSubmit={(values, { setErrors }) => {
-        debugger;
         roomStore.create(values.name).catch((error) => {
           setErrors({ error: "Invalid name" });
         });

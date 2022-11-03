@@ -3,7 +3,7 @@ import { Room } from "../models/Room";
 import { User, UserFormValues } from "../models/User";
 import { store } from "../stores/store";
 
-axios.defaults.baseURL = "http://localhost:8080/api";
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
   "jwt"
 )}`;
