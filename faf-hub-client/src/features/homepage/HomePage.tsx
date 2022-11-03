@@ -6,8 +6,9 @@ import { useStore } from "../../app/stores/store";
 import LoginForm from "../login/LoginForm";
 import RegisterForm from "../register/RegisterForm";
 import "./styles.css";
+
 export default observer(function HomePage() {
-  const { userStore, modalStore } = useStore();
+    const { userStore, modalStore} = useStore();
 
   return (
     <div className="homePageContainer">

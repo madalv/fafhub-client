@@ -1,11 +1,12 @@
 import { Button, TextArea } from "semantic-ui-react";
-import RoomList from "../room-dashboard/RoomList";
+import RoomList from "../roomDashboard/RoomList";
 import UserInfo from "../../userinfo/UserInfo";
 import "./styles.css";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../app/stores/store";
 import CreateRoom from "../roomCreationForm/CreateRoom";
 import {useNavigate} from "react-router-dom";
+import SelectedRoom from "../selectedRoom/SelectedRoom";
 
 export default observer(function Rooms() {
   const { modalStore, userStore } = useStore();
@@ -39,7 +40,9 @@ export default observer(function Rooms() {
             <RoomList />
           </div>
         </div>
-        <div className="roomMiddle"></div>
+        <div className="roomMiddle">
+            <SelectedRoom></SelectedRoom>
+        </div>
         <div className="roomRight"></div>
       </div>
     </div>
