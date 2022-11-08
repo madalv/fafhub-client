@@ -6,7 +6,7 @@ import {store, useStore} from "../../../app/stores/store";
 // log out -> log in -> send message won't work rn (without refreshing to reconnect)
 
 // TODO fix thing that it won't automatically add the message if room is newly created unless refreshed
-let ws = new WebSocket(`ws://localhost:8080/api/ws/?token=${store.commonStore.token}`)
+let ws = new WebSocket(`${process.env.REACT_APP_WS_URL}/?token=${store.commonStore.token}`)
 
 const handleSend = (roomId: string) => {
     const input = document.getElementById("message") as HTMLInputElement
