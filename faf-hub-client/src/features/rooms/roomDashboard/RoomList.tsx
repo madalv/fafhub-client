@@ -10,10 +10,11 @@ const RoomList: React.FC = () => {
   useEffect(() => {
     roomStore.loadRooms().then();
   }, [roomStore]);
+
   return (
-    <Menu vertical inverted>
+    <Menu vertical inverted fluid>
       {roomStore.rooms.map((room) => (
-        <Menu.Item key={room.id} as={NavLink} className="menuItem">
+        <Menu.Item key={room.id} as={NavLink} className="menuItem" onClick={() => roomStore.setSelectedRoom(room.id)}>
             {room.name}: {room.ownerId}
         </Menu.Item>
       ))}

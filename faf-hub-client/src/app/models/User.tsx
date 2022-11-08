@@ -7,6 +7,8 @@ export interface User extends Base {
 	email: string
 	rooms: Room[]
 	token: string
+	isOnline: boolean
+	roles: string[]
 }
 
 export interface UserFormValues {

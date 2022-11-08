@@ -1,5 +1,6 @@
 .roomContainer {
-  background-color: rgb(24, 24, 48);
+  background: rgb(24,24,48);
+  background: linear-gradient(90deg, rgba(24,24,48,1) 35%, rgba(156,36,138,1) 100%, rgba(2,0,36,1) 181830%);
   height: 100vh;
 }
 .roomsHeader {
@@ -12,7 +13,8 @@ h1 {
 }
 .middleSection {
   display: flex;
-  background-color: rgb(24, 24, 48);
+  background: rgb(24,24,48);
+  background: linear-gradient(90deg, rgba(24,24,48,1) 35%, rgba(156,36,138,1) 100%, rgba(2,0,36,1) 181830%);
   width: 80%;
   right: 0;
   height: 90%;
@@ -22,7 +24,7 @@ h1 {
   padding-bottom: 2%;
 }
 .middleSection div {
-  background-color: blue;
+  background-color: blueviolet;
 }
 .roomLeft {
   flex: 1;
@@ -32,6 +34,7 @@ h1 {
 }
 .roomMiddle {
   flex: 2;
+  overflow-y: scroll;
 }
 .roomRight {
   flex: 1;

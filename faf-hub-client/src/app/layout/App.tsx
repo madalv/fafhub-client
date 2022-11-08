@@ -6,14 +6,18 @@ import { useStore } from "../stores/store";
 import NavBar from "./NavBar";
 import ModalContainer from "../common/modals/ModalContainer";
 import PrivateRoutes from "./PrivateRoutes";
-import Rooms from "../../features/rooms/roomspage/Rooms";
+import Rooms from "../../features/rooms/roomsPage/Rooms";
 
 const App: React.FC = () => {
   const { userStore, commonStore } = useStore();
 
   useEffect(() => {
     if (commonStore.token) {
-      userStore.setUser().then(() => commonStore.setIsLoaded(true))
+      userStore.setUser().then(() => {
+        commonStore.setIsLoaded(true)
+
+      })
+
     }
   }, [commonStore, userStore]);
   return (

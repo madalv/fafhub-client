@@ -2,8 +2,6 @@ import { User, UserFormValues } from "../models/User";
 import { makeAutoObservable, runInAction } from "mobx";
 import { agent } from "../api/agent";
 import { store } from "./store";
-import { history } from "../../index";
-import {NavigateFunction, useNavigate} from "react-router-dom";
 
 export default class UserStore {
   user: User | null = null;
@@ -31,6 +29,7 @@ export default class UserStore {
   logout = () => {
     store.commonStore.setToken(null);
     window.localStorage.removeItem("jwt");
+    store.roomStore.unsetSelectedRoom()
     this.user = null;
     console.log("Logged out!");
   };

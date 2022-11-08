@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { Room } from "../models/Room";
 import { User, UserFormValues } from "../models/User";
 import { store } from "../stores/store";
+import {Message} from "../models/Message";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
@@ -28,7 +29,7 @@ const requests = {
 
 const Rooms = {
   list: () => requests.get<Room[]>(`/rooms`),
-  details: (id: string) => requests.get<Room>(`/rooms/${id}`),
+  messages: (id: string) => requests.get<Message[]>(`/messages/${id}`),
   create: (roomFormValue: object) => requests.post(`/rooms`, roomFormValue),
   update: (room: Room) => requests.put(`/rooms/${room.id}`, room),
   delete: (id: string) => requests.del(`rooms/${id}`),

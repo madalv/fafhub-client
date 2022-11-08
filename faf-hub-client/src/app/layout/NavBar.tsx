@@ -12,7 +12,7 @@ const NavBar: React.FC = () => {
         <div className="container">
           <div className="aside">
             <Image src="/assets/faf.png" />
-            <Menu vertical inverted>
+            <Menu vertical inverted fluid>
               <Menu.Item as={NavLink} to="/" className="menuItem" name="main">
                 Main
               </Menu.Item>
