@@ -1,0 +1,8 @@
+.messageList {
+    overflow-y: scroll;
+    border: violet;
+}
+
+.textInput {
+    position: absolute;
+}

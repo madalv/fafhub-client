@@ -43,4 +43,5 @@ h1 {
   flex: 1;
   border-radius: 2%;
   background-color: rgb(0, 19, 41) !important;
+  overflow-y: scroll;
 }

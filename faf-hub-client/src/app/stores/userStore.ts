@@ -11,7 +11,6 @@ export default class UserStore {
   }
 
   get isLoggedIn() {
-    console.log(!!this.user);
     return !!this.user;
   }
 
@@ -20,18 +19,25 @@ export default class UserStore {
       const token = await agent.Account.login(creds);
       store.commonStore.setToken(token.token);
       await this.setUser();
+      store.wsStore.connect()
       store.modalStore.closeModal();
     } catch (error) {
       throw error;
     }
   };
 
+  // getByEmail = async (email: string): Promise<User> => {
+  //   const user: User = await agent.Account.getByEmail({"email": email})
+  //   console.log(user)
+  //   return user
+  // }
+
   logout = () => {
     store.commonStore.setToken(null);
     window.localStorage.removeItem("jwt");
     store.roomStore.unsetSelectedRoom()
     this.user = null;
-    console.log("Logged out!");
+    store.wsStore.disconnect()
   };
 
   setUser = async () => {

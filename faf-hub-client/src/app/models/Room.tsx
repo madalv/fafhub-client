@@ -8,3 +8,7 @@ export interface Room extends Base {
   users: User[];
   messages: Message[];
 }
+
+export interface CreateRoom {
+  name: string;
+}

@@ -24,7 +24,6 @@ const PageBar: React.FC = () => {
           </Link>
         </>
       )}
-      {userStore.isLoggedIn ? <h3>{userStore.user?.email}</h3> : <h3></h3>}
     </>
   );
 };

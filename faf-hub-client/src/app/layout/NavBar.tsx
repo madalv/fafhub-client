@@ -1,8 +1,10 @@
+import "./styles.css";
 import { observer } from "mobx-react-lite";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Image, Menu } from "semantic-ui-react";
 import { useStore } from "../stores/store";
+
 
 const NavBar: React.FC = () => {
   const { userStore } = useStore();
