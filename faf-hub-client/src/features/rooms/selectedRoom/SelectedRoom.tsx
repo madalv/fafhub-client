@@ -1,49 +1,77 @@
 import React, {useEffect} from 'react'
 import {observer} from "mobx-react-lite";
 import {store, useStore} from "../../../app/stores/store";
+import "./styles.css";
+import {Message} from "../../../app/models/Message";
+import {Button, Input} from "semantic-ui-react";
+import AddUserPopup from "./AddUserPopup";
 
-// TODO connect to different ws when logging in
-// log out -> log in -> send message won't work rn (without refreshing to reconnect)
+// TODO refactor
 
-// TODO fix thing that it won't automatically add the message if room is newly created unless refreshed
-let ws = new WebSocket(`${process.env.REACT_APP_WS_URL}/?token=${store.commonStore.token}`)
+// TODO fix message duplication after logout -> login
+// login 3 times, message is duplicated 3 times, even w diff accounts
 
-const handleSend = (roomId: string) => {
+// TODO validate message
+const handleSend = () => {
+    let ws = store.wsStore.ws
     const input = document.getElementById("message") as HTMLInputElement
-    // console.log(input.value)
-    // console.log(JSON.stringify({"text": input.nodeValue, "command": "CreateMessage", "targetId": roomId, "roomId": roomId}))
-    if (input.value != null) {
-        ws.send(JSON.stringify({"text": input.value, "command": "CreateMessage", "targetId": roomId, "roomId": roomId}))
+    if (input.value != null && input.value != "") {
+        ws!!.send(JSON.stringify({"text": input.value, "command": "CreateMessage",
+            "targetId": store.roomStore.selectedRoom?.id, "roomId": store.roomStore.selectedRoom?.id}))
+        input.value = ""
+    }
+}
+
+
+const handleKeyDown = (event : React.KeyboardEvent<HTMLDivElement>)  => {
+    if (event.key == 'Enter') {
+        handleSend()
     }
 }
 
 const SelectedRoom: React.FC = () => {
-    const {roomStore, commonStore} = useStore();
+    const {roomStore, commonStore, wsStore} = useStore();
 
     useEffect(() => {
-        ws.onmessage = (event) => {
-            console.log(event.data)
-            roomStore.addNewMessageToRoom(roomStore.selectedRoom!!.id, JSON.parse(event.data))
+        wsStore.ws!!.onmessage = (event) => {
+            let msg =  JSON.parse(event.data) as Message
+            console.log(msg)
+            if (msg.command === "CreateMessage") {
+                roomStore.addNewMessageToRoom(roomStore.selectedRoom!!.id, msg)
+            }
         }
-    }, [roomStore, commonStore])
+
+    }, [commonStore, wsStore])
 
     return (
         <>
             <h3><b>{roomStore.selectedRoom?.name}</b></h3>
 
-            {roomStore.selectedRoom?.messages ? roomStore.selectedRoom?.messages.slice().reverse().map((message) => (
-                <div key={message.id}>
-                    <b>{message.user?.email} {message.createdAt}</b>
-                    <div>
-                        {message.text}
-                    </div>
-                </div>
-            )) : <div>It's kind of quiet here... </div>}
+            <AddUserPopup></AddUserPopup>
 
-            <div className="ui icon input">
-                <input id="message" type="text" placeholder="Write something nice..."/>
-                <i className="envelope outline link icon" onClick={() => {handleSend(roomStore.selectedRoom!!.id)}}></i>
+            <div className="messageList">
+                {roomStore.selectedRoom?.messages ? roomStore.selectedRoom?.messages.slice().reverse().map((message) => (
+                    <div key={message.id}  className="message">
+                        <b>{message.userId} {message.createdAt}</b>
+                        <div>
+                            {message.text}
+                        </div>
+                    </div>
+                )) : <div>It's kind of quiet here... </div>}
             </div>
+
+
+            <Input inverted id="message" onKeyDown={handleKeyDown}
+                   placeholder={`Message @${roomStore.selectedRoom?.name}`}
+                action={{
+                    color: "purple",
+                    labelPosition: "right",
+                    content: "Send",
+                    icon: {name: "envelope"},
+                    onClick: (() => handleSend())
+                }}
+
+            />
         </>
     )
 }

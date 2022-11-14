@@ -18,3 +18,7 @@ export interface UserFormValues {
 	firstName?: string
 	lastName?: string
 }
+
+export interface SearchByEmail {
+	email: string
+}

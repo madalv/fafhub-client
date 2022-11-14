@@ -11,8 +11,10 @@ export default function UserInfo() {
         src="/assets/user_placeholder.png"
       />
       <div className="nameContainer">
-        <div>{userStore.user?.lastName}</div>
-        <div>{userStore.user?.firstName}</div>
+          <div>{userStore.user?.id}</div>
+          <div>{userStore.user?.lastName}</div>
+          <div>{userStore.user?.firstName}</div>
+
       </div>
     </div>
   );

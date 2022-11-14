@@ -14,6 +14,10 @@ export default class RoomStore {
     makeAutoObservable(this);
   }
 
+  addUserToSelectedRoom() {
+
+  }
+
   setSelectedRoom(roomId: string) {
     // @ts-ignore
     this.selectedRoom = this.rooms.find(r => r.id === roomId)
@@ -28,7 +32,7 @@ export default class RoomStore {
   loadMessagesForRoom = async (roomId: string) => {
     try {
       const room = this.rooms.find(r => r.id === roomId)
-      await runInAction(async () => room!!.messages = await agent.Rooms.messages(roomId))
+      this.setMessages(room!!, await agent.Rooms.messages(roomId).then())
     } catch (e) {
       console.log(e)
     }
@@ -36,7 +40,11 @@ export default class RoomStore {
 
   addNewMessageToRoom = (roomId: string, message: Message) => {
     const room = this.rooms.find(r => r.id === roomId)
-    runInAction(() => room!!.messages = [message, ...room!!.messages])
+    this.setMessages(room!!, [message, ...room!!.messages])
+  }
+
+  setMessages(room: Room, messages: Message[]) {
+    room!!.messages = messages
   }
 
   loadRooms = async () => {
@@ -51,10 +59,12 @@ export default class RoomStore {
   setRooms = (rooms: Room[]) => {
     this.rooms = rooms;
   };
+
   create = async (roomName: string) => {
     try {
-      debugger;
-      await agent.Rooms.create({ name: roomName });
+      console.log(store.wsStore.isConnected())
+      store.wsStore.ws?.send(JSON.stringify({"text": roomName, "command": "CreateRoom",
+        "targetId": "anything", "roomId": "anything"}))
       store.modalStore.closeModal();
       await this.loadRooms()
     } catch (error) {

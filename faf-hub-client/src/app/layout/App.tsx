@@ -9,17 +9,16 @@ import PrivateRoutes from "./PrivateRoutes";
 import Rooms from "../../features/rooms/roomsPage/Rooms";
 
 const App: React.FC = () => {
-  const { userStore, commonStore } = useStore();
+  const { userStore, commonStore, wsStore } = useStore();
 
   useEffect(() => {
     if (commonStore.token) {
       userStore.setUser().then(() => {
         commonStore.setIsLoaded(true)
-
+        wsStore.connect()
       })
-
     }
-  }, [commonStore, userStore]);
+  }, [commonStore, userStore, wsStore]);
   return (
     <>
       <ModalContainer />
