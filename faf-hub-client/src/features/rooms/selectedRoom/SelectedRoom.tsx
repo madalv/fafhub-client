@@ -40,7 +40,7 @@ const SelectedRoom: React.FC = () => {
             }
         }
 
-    }, [commonStore, wsStore])
+    }, [commonStore, wsStore, roomStore])
 
     return (
         <>

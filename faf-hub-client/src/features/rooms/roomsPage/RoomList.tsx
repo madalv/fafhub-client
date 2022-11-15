@@ -9,7 +9,7 @@ const RoomList: React.FC = () => {
   const { roomStore } = useStore();
 
   useEffect(() => {
-    roomStore.loadRooms().then();
+     roomStore.loadRooms().then(() => console.log("in roomlist"));
   }, [roomStore]);
 
   return (
@@ -24,8 +24,6 @@ const RoomList: React.FC = () => {
                 <Button.Content hidden>Delete</Button.Content>
               </Button>
             </Menu.Item>
-
-
       ))}
     </Menu>
   );

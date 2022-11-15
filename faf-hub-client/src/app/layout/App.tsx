@@ -15,19 +15,17 @@ const App: React.FC = () => {
     if (commonStore.token) {
       userStore.setUser().then(() => {
         wsStore.connect()
-        roomStore.setGeneralRoom()
-        roomStore.setAnnouncementsRoom()
 
-        if (roomStore.selectedRoomId) {
-          roomStore.loadRooms().then(() => {
-            roomStore.setSelectedRoom(roomStore.selectedRoomId!!)
-          })
-        } else roomStore.setSelectedRoom(roomStore.generalRoomId)
+        roomStore.setGeneralRoom().then(() => {
+          console.log("setting is loaded true")
+          commonStore.setIsLoaded(true)
+        })
 
-        commonStore.setIsLoaded(true)
       })
+    } else {
+      commonStore.setIsLoaded(true)
     }
-  }, [commonStore, userStore, wsStore]);
+  }, [commonStore, userStore, wsStore, roomStore]);
   return (
     <>
       <ModalContainer />

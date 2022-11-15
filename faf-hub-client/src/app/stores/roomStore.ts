@@ -30,19 +30,21 @@ export default class RoomStore {
     this.selectedRoomId = id
 }
 
-  setGeneralRoom = () => {
-    agent.Rooms.details(this.generalRoomId).then(room => {
-      this.generalRoom = room
-      console.log(JSON.stringify(this.generalRoom))
-    })
-  }
-
-  setAnnouncementsRoom = () => {
-    agent.Rooms.details(this.announcementsRoomId).then(room => {
+  setGeneralRoom = async () => {
+    await agent.Rooms.details(this.announcementsRoomId).then(room => {
       this.announcementsRoom = room
       console.log(JSON.stringify(this.announcementsRoom))
     })
+    await agent.Rooms.details(this.generalRoomId).then(room => {
+      this.generalRoom = room
+      console.log(JSON.stringify(this.generalRoom))
+    })
+
   }
+
+  // setAnnouncementsRoom = async () => {
+  //
+  // }
 
   setSelectedRoom = (roomId: string) => {
     // @ts-ignore
@@ -90,7 +92,8 @@ export default class RoomStore {
   loadRooms = async () => {
     try {
       const user = await agent.Account.current();
-      this.setRooms([ this.generalRoom!!, this.announcementsRoom!!, ...user.rooms]);
+      this.setRooms([this.generalRoom!!, this.announcementsRoom!!, ...user.rooms]);
+      console.log(JSON.stringify(this.rooms))
     } catch (error) {
       console.log(error);
     }
