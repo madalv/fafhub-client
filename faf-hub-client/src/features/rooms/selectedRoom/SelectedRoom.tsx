@@ -35,7 +35,6 @@ const SelectedRoom: React.FC = () => {
     useEffect(() => {
         wsStore.ws!!.onmessage = (event) => {
             let msg =  JSON.parse(event.data) as Message
-            console.log(msg)
             if (msg.command === "CreateMessage") {
                 roomStore.addNewMessageToRoom(roomStore.selectedRoom!!.id, msg)
             }

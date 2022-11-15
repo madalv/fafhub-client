@@ -10,8 +10,8 @@ export default observer(function CreateRoom() {
       onSubmit={(values, { setErrors }) => {
         roomStore.create(values.name).catch((error) => {
           setErrors({ error: "Invalid name" });
-        });
-        modalStore.closeModal();
+        }).then(() => modalStore.closeModal());
+
       }}
     >
       {({ handleSubmit, isSubmitting, errors }) => (

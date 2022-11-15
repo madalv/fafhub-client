@@ -18,6 +18,7 @@ export default class UserStore {
     try {
       const token = await agent.Account.login(creds);
       store.commonStore.setToken(token.token);
+      store.roomStore.setSelectedRoom(store.roomStore.generalRoomId)
       await this.setUser();
       store.wsStore.connect()
       store.modalStore.closeModal();
@@ -35,6 +36,7 @@ export default class UserStore {
   logout = () => {
     store.commonStore.setToken(null);
     window.localStorage.removeItem("jwt");
+    window.localStorage.removeItem("selroomid");
     store.roomStore.unsetSelectedRoom()
     this.user = null;
     store.wsStore.disconnect()

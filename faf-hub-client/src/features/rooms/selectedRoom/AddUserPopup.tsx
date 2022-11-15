@@ -2,7 +2,6 @@ import React from 'react'
 import {Header, Button, Popup, Grid, Segment, Input} from 'semantic-ui-react';
 import {observer} from "mobx-react-lite";
 import {store, useStore} from "../../../app/stores/store";
-import {User} from "../../../app/models/User";
 
 
 const handleAddUser = () => {
