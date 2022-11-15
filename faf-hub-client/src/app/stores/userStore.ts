@@ -18,7 +18,8 @@ export default class UserStore {
     try {
       const token = await agent.Account.login(creds);
       store.commonStore.setToken(token.token);
-      store.roomStore.setSelectedRoom(store.roomStore.generalRoomId)
+      // store.roomStore.setSelectedRoom(store.roomStore.generalRoomId)
+      await store.roomStore.setGeneralRoom()
       await this.setUser();
       store.wsStore.connect()
       store.modalStore.closeModal();
