@@ -29,6 +29,7 @@ const requests = {
 
 const Rooms = {
   list: () => requests.get<Room[]>(`/rooms`),
+  details: (id: string) => requests.get<Room>(`/rooms/${id}`),
   messages: (id: string) => requests.get<Message[]>(`/messages/${id}`),
   create: (room: CreateRoom) => requests.post(`/rooms`, room),
   update: (room: Room) => requests.put(`/rooms/${room.id}`, room),

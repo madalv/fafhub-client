@@ -9,13 +9,22 @@ import PrivateRoutes from "./PrivateRoutes";
 import Rooms from "../../features/rooms/roomsPage/Rooms";
 
 const App: React.FC = () => {
-  const { userStore, commonStore, wsStore } = useStore();
+  const { userStore, commonStore, wsStore, roomStore } = useStore();
 
   useEffect(() => {
     if (commonStore.token) {
       userStore.setUser().then(() => {
-        commonStore.setIsLoaded(true)
         wsStore.connect()
+        roomStore.setGeneralRoom()
+        roomStore.setAnnouncementsRoom()
+
+        if (roomStore.selectedRoomId) {
+          roomStore.loadRooms().then(() => {
+            roomStore.setSelectedRoom(roomStore.selectedRoomId!!)
+          })
+        } else roomStore.setSelectedRoom(roomStore.generalRoomId)
+
+        commonStore.setIsLoaded(true)
       })
     }
   }, [commonStore, userStore, wsStore]);
