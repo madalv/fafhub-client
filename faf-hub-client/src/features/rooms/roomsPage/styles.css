@@ -1,20 +1,35 @@
 .roomContainer {
-  background: rgb(24,24,48);
-  background: linear-gradient(90deg, rgba(24,24,48,1) 35%, rgba(156,36,138,1) 100%, rgba(2,0,36,1) 181830%);
+  background: rgb(24, 24, 48);
+  /* background: linear-gradient(
+    90deg,
+    rgba(24, 24, 48, 1) 35%,
+    rgba(156, 36, 138, 1) 100%,
+    rgba(2, 0, 36, 1) 181830%
+  ); */
   height: 100vh;
 }
 .roomsHeader {
   display: flex;
   padding: 2% 0 0 2%;
   color: white;
+  margin-right: 2%;
 }
 h1 {
   flex: 1;
 }
+.defaultMessage,
+.message {
+  color: white;
+}
 .middleSection {
   display: flex;
-  background: rgb(24,24,48);
-  background: linear-gradient(90deg, rgba(24,24,48,1) 35%, rgba(156,36,138,1) 100%, rgba(2,0,36,1) 181830%);
+  background: rgb(24, 24, 48);
+  /* background: linear-gradient(
+    90deg,
+    rgba(24, 24, 48, 1) 35%,
+    rgba(156, 36, 138, 1) 100%,
+    rgba(2, 0, 36, 1) 181830%
+  ); */
   width: 80%;
   right: 0;
   height: 90%;
@@ -24,7 +39,7 @@ h1 {
   padding-bottom: 2%;
 }
 .middleSection div {
-  background-color: blueviolet;
+  background-color: rgb(0, 19, 41);
 }
 .roomLeft {
   flex: 1;
@@ -42,7 +57,6 @@ h1 {
 .roomListContainer {
   flex: 1;
   border-radius: 2%;
-  background-color: rgb(0, 19, 41) !important;
   overflow-y: scroll;
 }
 
@@ -53,13 +67,17 @@ h1 {
 .hidden.content {
   background: none;
 }
-
+.menuItem,
+.menu {
+  background-color: transparent !important;
+}
+.menuItemContainer {
+  display: flex;
+  justify-content: space-between;
+}
 .menuItemTextWrapper {
   max-width: 80%;
   display: inline-block;
+  left: 0;
   background-color: transparent !important;
-}
-
-.delete.ui.inverted.button {
-  float: right;
 }
