@@ -13,6 +13,8 @@ export default class WsStore {
     }
 
     disconnect = () => {
+        console.log("Disconnected ws")
+        this.ws?.close(1000, "User logged out")
         this.ws = null
     }
 

@@ -5,29 +5,31 @@ import {store, useStore} from "../../../app/stores/store";
 
 
 const handleAddUser = () => {
-    // let ws = store.wsStore.ws
-    // const input = document.getElementById("emailInput") as HTMLInputElement
-    //
-    //
-    // if (input.value != null && input.value != "") {
-    //
-    //     let email = input.value
-    //     store.userStore.getByEmail(email).then(user => {
-    //         ws!!.send(JSON.stringify({
-    //             "text": "anything",
-    //             "command": "AddUser",
-    //             "targetId": user.id,
-    //             "roomId": store.roomStore.selectedRoom?.id}))
-    //         input.value = ""
-    //     })
-    //
-    // }
+    let ws = store.wsStore.ws
+    const input = document.getElementById("emailInput") as HTMLInputElement
+
+
+    if (input.value != null && input.value != "") {
+
+        let email = input.value
+        store.userStore.getUsersByEmail(email).then(users => {
+            console.log(users[0])
+            ws!!.send(JSON.stringify({
+                "text": "anything",
+                "command": "AddUser",
+                "targetId": users[0].id,
+                "roomId": store.roomStore.selectedRoom?.id}))
+            input.value = ""
+        })
+
+    }
 }
 
 const AddUserPopup: React.FC = () => {
     const {roomStore} = useStore()
     return (
-        <Popup trigger={<Button inverted>Add User</Button>} flowing hoverable inverted>
+        <Popup trigger={<Button inverted>Add User</Button>}
+               on='click' inverted>
                 <Input id="emailInput" placeholder='Enter user email' action={{
                     content: "Add",
                     inverted: true,

@@ -17,10 +17,8 @@ const App: React.FC = () => {
         wsStore.connect()
 
         roomStore.setGeneralRoom().then(() => {
-          console.log("setting is loaded true")
           commonStore.setIsLoaded(true)
         })
-
       })
     } else {
       commonStore.setIsLoaded(true)

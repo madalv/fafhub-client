@@ -3,6 +3,7 @@ import {Room} from "../models/Room";
 import {agent} from "../api/agent";
 import {store} from "./store";
 import {Message} from "../models/Message";
+import {User} from "../models/User";
 
 // TODO persist selected room id
 
@@ -33,24 +34,21 @@ export default class RoomStore {
   setGeneralRoom = async () => {
     await agent.Rooms.details(this.announcementsRoomId).then(room => {
       this.announcementsRoom = room
-      console.log(JSON.stringify(this.announcementsRoom))
+      //console.log(JSON.stringify(this.announcementsRoom))
     })
     await agent.Rooms.details(this.generalRoomId).then(room => {
       this.generalRoom = room
-      console.log(JSON.stringify(this.generalRoom))
+      //console.log(JSON.stringify(this.generalRoom))
     })
 
   }
 
-  // setAnnouncementsRoom = async () => {
-  //
-  // }
-
-  setSelectedRoom = (roomId: string) => {
+  setSelectedRoom = async (roomId: string) => {
+    // TODO optimize this bs
     // @ts-ignore
     this.selectedRoom = this.rooms.find(r => r.id === roomId)
     this.setSelectedRoomId(roomId)
-    console.log(this.selectedRoom!!.name)
+    //console.log(this.selectedRoom!!.name)
     this.loadMessagesForRoom(this.selectedRoom!!.id).then()
     this.loadUsersForRoom(this.selectedRoom!!.id).then()
   }
@@ -58,13 +56,18 @@ export default class RoomStore {
   loadUsersForRoom = async (roomId: string) => {
     try {
       const room = this.rooms.find(r => r.id === roomId)
+
       await agent.Rooms.details(roomId).then(r => {
-        room!!.users = r.users
+        this.setUsers(room!!, r.users)
       })
       //console.log(JSON.stringify(room))
     } catch (e) {
       console.log(e)
     }
+}
+
+setUsers(room: Room, users: User[]) {
+  room!!.users = users
 }
 
   unsetSelectedRoom = () => {
@@ -82,6 +85,7 @@ export default class RoomStore {
 
   addNewMessageToRoom = (roomId: string, message: Message) => {
     const room = this.rooms.find(r => r.id === roomId)
+    //console.log("messages: " + JSON.stringify(room!!.messages))
     this.setMessages(room!!, [message, ...room!!.messages])
   }
 
@@ -93,7 +97,7 @@ export default class RoomStore {
     try {
       const user = await agent.Account.current();
       this.setRooms([this.generalRoom!!, this.announcementsRoom!!, ...user.rooms]);
-      console.log(JSON.stringify(this.rooms))
+      //console.log(JSON.stringify(this.rooms))
     } catch (error) {
       console.log(error);
     }
