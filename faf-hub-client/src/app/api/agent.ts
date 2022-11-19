@@ -21,7 +21,6 @@ const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
 const requests = {
   get: <T>(url: string) => axios.get<T>(url).then(responseBody),
-  //getWithBody: <T>(url: string, config: {}) => axios.get<T>(url, config).then(responseBody),
   post: <T>(url: string, body: {}) => axios.post<T>(url, body).then(responseBody),
   put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
   del: <T>(url: string) => axios.delete<T>(url).then(responseBody),
@@ -32,19 +31,14 @@ const Rooms = {
   details: (id: string) => requests.get<Room>(`/rooms/${id}`),
   messages: (id: string) => requests.get<Message[]>(`/messages/${id}`),
   create: (room: CreateRoom) => requests.post(`/rooms`, room),
-  update: (room: Room) => requests.put(`/rooms/${room.id}`, room),
-  delete: (id: string) => requests.del(`rooms/${id}`),
+  update: (room: Room) => requests.put(`/rooms/${room.id}`, room)
 };
 
 const Account = {
   current: () => requests.get<User>(`/users/current`),
   login: (user: UserFormValues) => requests.post<User>(`users/login`, user),
   register: (user: UserFormValues) => requests.post<User>(`users/register`, user),
-  // getByEmail: (body: SearchByEmail) => requests.getWithBody<User>(`users/email`, {
-  //   params: {
-  //     email: body.email
-  //   }
-  // })
+  getUsersByEmail: (email: string) => requests.get<User[]>(`users/email/${email}`)
 };
 
 export const agent = {

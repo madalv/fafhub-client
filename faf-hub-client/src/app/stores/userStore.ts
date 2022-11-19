@@ -1,7 +1,7 @@
-import { User, UserFormValues } from "../models/User";
-import { makeAutoObservable, runInAction } from "mobx";
-import { agent } from "../api/agent";
-import { store } from "./store";
+import {User, UserFormValues} from "../models/User";
+import {makeAutoObservable, runInAction} from "mobx";
+import {agent} from "../api/agent";
+import {store} from "./store";
 
 export default class UserStore {
   user: User | null = null;
@@ -28,11 +28,9 @@ export default class UserStore {
     }
   };
 
-  // getByEmail = async (email: string): Promise<User> => {
-  //   const user: User = await agent.Account.getByEmail({"email": email})
-  //   console.log(user)
-  //   return user
-  // }
+  getUsersByEmail = async (email: string): Promise<User[]> => {
+    return await agent.Account.getUsersByEmail(email)
+  }
 
   logout = () => {
     store.commonStore.setToken(null);

@@ -28,23 +28,49 @@ const handleSend = () => {
   }
 };
 
-const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-  if (event.key === "Enter") {
-    handleSend();
-  }
-};
+
+const handleKeyDown = (event : React.KeyboardEvent<HTMLDivElement>)  => {
+    if (event.key == 'Enter') {
+        handleSend()
+    }
+}
 
 const SelectedRoom: React.FC = () => {
-  const { roomStore, commonStore, wsStore } = useStore();
+    const {roomStore, commonStore, wsStore, userStore} = useStore();
+    // todo move this somewhere else
+    useEffect(() => {
+        wsStore.ws!!.onmessage = (event) => {
+            let msg = JSON.parse(event.data) as Message
+            console.log(msg)
 
-  useEffect(() => {
-    wsStore.ws!!.onmessage = (event) => {
-      let msg = JSON.parse(event.data) as Message;
-      if (msg.command === "CreateMessage") {
-        roomStore.addNewMessageToRoom(roomStore.selectedRoom!!.id, msg);
-      }
-    };
-  }, [commonStore, wsStore, roomStore]);
+            // todo room.messages is undefined
+            switch (msg.command) {
+                case "CreateMessage":
+                    roomStore.addNewMessageToRoom(roomStore.selectedRoom!!.id, msg)
+                    break
+                case "AddUser":
+                    roomStore.loadRooms().then(() => {
+                        roomStore.setSelectedRoom(msg.roomId)
+                        roomStore.loadUsersForRoom(roomStore.selectedRoomId!!).then()
+                        roomStore.addNewMessageToRoom(roomStore.selectedRoom!!.id, msg)
+                    })
+
+                    break
+                case "DeleteRoom":
+                    roomStore.loadRooms().then()
+                    break
+                case "RemoveUser":
+                    break
+                case "CreateRoom":
+                    roomStore.loadRooms().then(() => {
+                        roomStore.setSelectedRoom(msg.roomId).then(
+                            () => roomStore.addNewMessageToRoom(roomStore.selectedRoom!!.id, msg)
+                        )
+                    })
+                    break
+            }
+        }
+    })
 
   return (
     <>
@@ -52,7 +78,7 @@ const SelectedRoom: React.FC = () => {
         <b className="defaultMessage">{roomStore.selectedRoom?.name}</b>
       </h3>
 
-      <AddUserPopup></AddUserPopup>
+        {roomStore.selectedRoom?.ownerId === userStore.user?.id ? <AddUserPopup/> : <></>}
 
       <div className="messageList">
         {roomStore.selectedRoom?.messages ? (
