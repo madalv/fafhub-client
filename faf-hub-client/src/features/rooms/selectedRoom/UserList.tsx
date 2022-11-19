@@ -19,6 +19,7 @@ const UserList: React.FC = () => {
         <Menu vertical inverted fluid>
             {roomStore.selectedRoom?.users ? roomStore.selectedRoom.users.map((user) => (
                 <Menu.Item key={user.id} as={NavLink} className="menuItem">
+
                     <div className="menuItemTextWrapper">
                         {user.isOnline ? <Icon name="circle" color="green"/>: <></>}
                         {user.email}
