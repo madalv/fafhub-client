@@ -1,4 +1,4 @@
-import { Button, TextArea } from "semantic-ui-react";
+import {Button, Input, TextArea} from "semantic-ui-react";
 import RoomList from "./RoomList";
 import UserInfo from "../../userinfo/UserInfo";
 import "./styles.css";
@@ -8,6 +8,9 @@ import CreateRoom from "../roomCreationForm/CreateRoom";
 import {useNavigate} from "react-router-dom";
 import SelectedRoom from "../selectedRoom/SelectedRoom";
 import UserList from "../selectedRoom/UserList";
+import React from "react";
+import MessageInput from "../selectedRoom/MessageInput";
+import RoomSearchBar from "./RoomSearchBar";
 
 export default observer(function Rooms() {
   const { modalStore, userStore } = useStore();
@@ -35,7 +38,7 @@ export default observer(function Rooms() {
       <div className="middleSection">
         <div className="roomLeft">
           <div className="ui search">
-            <input className="prompt" type="text" placeholder="Search..." />
+            <RoomSearchBar/>
           </div>
           <div className="roomListContainer">
             <RoomList />
@@ -43,6 +46,7 @@ export default observer(function Rooms() {
         </div>
         <div className="roomMiddle">
             <SelectedRoom></SelectedRoom>
+            <MessageInput></MessageInput>
         </div>
         <div className="roomRight">
             <UserList></UserList>

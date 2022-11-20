@@ -5,9 +5,15 @@ import {store} from "./store";
 
 export default class UserStore {
   user: User | null = null;
+  allUsers: User[] | null = null;
 
   constructor() {
     makeAutoObservable(this);
+  }
+
+setAllUsers = async () => {
+  //this.allUsers = await agent.Account.getAllUsers()
+  console.log(JSON.stringify(this.allUsers))
   }
 
   get isLoggedIn() {

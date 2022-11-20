@@ -5,6 +5,7 @@ import "./styles.css";
 import { Message } from "../../../app/models/Message";
 import { Input } from "semantic-ui-react";
 import AddUserPopup from "./AddUserPopup";
+import MessageInput from "./MessageInput";
 
 // TODO refactor
 
@@ -12,28 +13,7 @@ import AddUserPopup from "./AddUserPopup";
 // login 3 times, message is duplicated 3 times, even w diff accounts
 
 // TODO validate message
-const handleSend = () => {
-  let ws = store.wsStore.ws;
-  const input = document.getElementById("message") as HTMLInputElement;
-  if (input.value != null && input.value !== "") {
-    ws!!.send(
-      JSON.stringify({
-        text: input.value,
-        command: "CreateMessage",
-        targetId: store.roomStore.selectedRoom?.id,
-        roomId: store.roomStore.selectedRoom?.id,
-      })
-    );
-    input.value = "";
-  }
-};
 
-
-const handleKeyDown = (event : React.KeyboardEvent<HTMLDivElement>)  => {
-    if (event.key == 'Enter') {
-        handleSend()
-    }
-}
 
 const SelectedRoom: React.FC = () => {
     const {roomStore, commonStore, wsStore, userStore} = useStore();
@@ -51,7 +31,7 @@ const SelectedRoom: React.FC = () => {
                 case "AddUser":
                     roomStore.loadRooms().then(() => {
                         roomStore.setSelectedRoom(msg.roomId)
-                        roomStore.loadUsersForRoom(roomStore.selectedRoomId!!).then()
+                        roomStore.loadUsersForRoom(roomStore.selectedRoom!!).then()
                         roomStore.addNewMessageToRoom(roomStore.selectedRoom!!.id, msg)
                     })
 
@@ -95,20 +75,6 @@ const SelectedRoom: React.FC = () => {
           <div className="defaultMessage">It's kind of quiet here... </div>
         )}
       </div>
-
-      <Input
-        inverted
-        id="message"
-        onKeyDown={handleKeyDown}
-        placeholder={`Message @${roomStore.selectedRoom?.name}`}
-        action={{
-          color: "purple",
-          labelPosition: "right",
-          content: "Send",
-          icon: { name: "envelope" },
-          onClick: () => handleSend(),
-        }}
-      />
     </>
   );
 };

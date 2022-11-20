@@ -8,7 +8,6 @@ const handleAddUser = () => {
     let ws = store.wsStore.ws
     const input = document.getElementById("emailInput") as HTMLInputElement
 
-
     if (input.value != null && input.value != "") {
 
         let email = input.value
