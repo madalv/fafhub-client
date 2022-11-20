@@ -10,6 +10,7 @@ import SelectedRoom from "../selectedRoom/SelectedRoom";
 import UserList from "../selectedRoom/UserList";
 import React from "react";
 import MessageInput from "../selectedRoom/MessageInput";
+import RoomSearchBar from "./RoomSearchBar";
 
 export default observer(function Rooms() {
   const { modalStore, userStore } = useStore();
@@ -37,7 +38,7 @@ export default observer(function Rooms() {
       <div className="middleSection">
         <div className="roomLeft">
           <div className="ui search">
-            <input className="prompt" type="text" placeholder="Search..." />
+            <RoomSearchBar/>
           </div>
           <div className="roomListContainer">
             <RoomList />
