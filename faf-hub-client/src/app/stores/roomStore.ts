@@ -40,24 +40,36 @@ export default class RoomStore {
       this.generalRoom = room
       //console.log(JSON.stringify(this.generalRoom))
     })
-
   }
 
   setSelectedRoom = async (roomId: string) => {
     // TODO optimize this bs
-    // @ts-ignore
-    this.selectedRoom = this.rooms.find(r => r.id === roomId)
+
+    switch(roomId) {
+      case this.generalRoomId:
+        this.selectedRoom = this.generalRoom
+        break
+      case this.announcementsRoomId:
+        this.selectedRoom = this.announcementsRoom
+        break
+      default:
+        // @ts-ignore
+        this.selectedRoom = this.rooms.find(r => r.id === roomId)
+        break
+
+
+    }
     this.setSelectedRoomId(roomId)
-    //console.log(this.selectedRoom!!.name)
-    this.loadMessagesForRoom(this.selectedRoom!!.id).then()
-    this.loadUsersForRoom(this.selectedRoom!!.id).then()
+    console.log(this.selectedRoom!!.name)
+    this.loadMessagesForRoom(this.selectedRoom!!).then()
+    this.loadUsersForRoom(this.selectedRoom!!).then()
   }
 
-  loadUsersForRoom = async (roomId: string) => {
+  loadUsersForRoom = async (room: Room) => {
     try {
-      const room = this.rooms.find(r => r.id === roomId)
+      //const room = this.rooms.find(r => r.id === roomId)
 
-      await agent.Rooms.details(roomId).then(r => {
+      await agent.Rooms.details(room.id).then(r => {
         this.setUsers(room!!, r.users)
       })
       //console.log(JSON.stringify(room))
@@ -74,10 +86,10 @@ setUsers(room: Room, users: User[]) {
     this.selectedRoom = null
   }
 
-  loadMessagesForRoom = async (roomId: string) => {
+  loadMessagesForRoom = async (room: Room) => {
     try {
-        const room = this.rooms.find(r => r.id === roomId)
-        this.setMessages(room!!, await agent.Rooms.messages(roomId).then())
+        //const room = this.rooms.find(r => r.id === roomId)
+        this.setMessages(room!!, await agent.Rooms.messages(room.id).then())
     } catch (e) {
       console.log(e)
     }
@@ -96,7 +108,7 @@ setUsers(room: Room, users: User[]) {
   loadRooms = async () => {
     try {
       const user = await agent.Account.current();
-      this.setRooms([this.generalRoom!!, this.announcementsRoom!!, ...user.rooms]);
+      this.setRooms(user.rooms);
       //console.log(JSON.stringify(this.rooms))
     } catch (error) {
       console.log(error);
@@ -129,7 +141,7 @@ setUsers(room: Room, users: User[]) {
         "targetId": roomId,
         "roomId": roomId}))
       await this.loadRooms().then(() => {
-          store.roomStore.setSelectedRoom(store.roomStore.generalRoomId)
+          store.roomStore.setSelectedRoom(this.rooms[0].id)
       })
 
     } catch (error) {

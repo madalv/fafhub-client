@@ -7,6 +7,8 @@ import NavBar from "./NavBar";
 import ModalContainer from "../common/modals/ModalContainer";
 import PrivateRoutes from "./PrivateRoutes";
 import Rooms from "../../features/rooms/roomsPage/Rooms";
+import AnnouncementsRoom from "../../features/rooms/main/AnnouncementsRoom";
+import GeneralRoom from "../../features/rooms/community/GeneralRoom";
 
 const App: React.FC = () => {
   const { userStore, commonStore, wsStore, roomStore } = useStore();
@@ -17,7 +19,8 @@ const App: React.FC = () => {
         wsStore.connect()
 
         roomStore.setGeneralRoom().then(() => {
-          commonStore.setIsLoaded(true)
+          userStore.setAllUsers().then(() => commonStore.setIsLoaded(true))
+
         })
       })
     } else {
@@ -31,6 +34,8 @@ const App: React.FC = () => {
       <Routes>
         <Route element={<PrivateRoutes />}>
           <Route path="/rooms" element={<Rooms />} />
+          <Route path="/main" element={<AnnouncementsRoom />}  />
+          <Route path="/community" element={<GeneralRoom />}  />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
         <Route path="/" element={<HomePage />} />

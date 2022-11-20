@@ -38,7 +38,8 @@ const Account = {
   current: () => requests.get<User>(`/users/current`),
   login: (user: UserFormValues) => requests.post<User>(`users/login`, user),
   register: (user: UserFormValues) => requests.post<User>(`users/register`, user),
-  getUsersByEmail: (email: string) => requests.get<User[]>(`users/email/${email}`)
+  getUsersByEmail: (email: string) => requests.get<User[]>(`users/email/${email}`),
+  getAllUsers: () => requests.get<User[]>(`users`)
 };
 
 export const agent = {
