@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { observer } from "mobx-react-lite";
-import {Navigate, Route, Routes, useLocation, IndexRouteObject} from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import HomePage from "../../features/homepage/HomePage";
 import { useStore } from "../stores/store";
 import NavBar from "./NavBar";
@@ -12,19 +12,17 @@ import GeneralRoom from "../../features/rooms/community/GeneralRoom";
 
 const App: React.FC = () => {
   const { userStore, commonStore, wsStore, roomStore } = useStore();
-
   useEffect(() => {
     if (commonStore.token) {
       userStore.setUser().then(() => {
-        wsStore.connect()
+        wsStore.connect();
 
         roomStore.setGeneralRoom().then(() => {
-          userStore.setAllUsers().then(() => commonStore.setIsLoaded(true))
-
-        })
-      })
+          userStore.setAllUsers().then(() => commonStore.setIsLoaded(true));
+        });
+      });
     } else {
-      commonStore.setIsLoaded(true)
+      commonStore.setIsLoaded(true);
     }
   }, [commonStore, userStore, wsStore, roomStore]);
   return (
@@ -34,8 +32,8 @@ const App: React.FC = () => {
       <Routes>
         <Route element={<PrivateRoutes />}>
           <Route path="/rooms" element={<Rooms />} />
-          <Route path="/main" element={<AnnouncementsRoom />}  />
-          <Route path="/community" element={<GeneralRoom />}  />
+          <Route path="/main" element={<AnnouncementsRoom />} />
+          <Route path="/community" element={<GeneralRoom />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
         <Route path="/" element={<HomePage />} />

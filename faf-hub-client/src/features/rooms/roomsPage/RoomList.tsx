@@ -5,31 +5,36 @@ import { observer } from "mobx-react-lite";
 import { NavLink } from "react-router-dom";
 
 const RoomList: React.FC = () => {
-  const { roomStore, userStore } = useStore();
+  const { roomStore } = useStore();
 
   useEffect(() => {
-     roomStore.loadRooms().then();
+    roomStore.loadRooms().then();
   }, [roomStore]);
 
   return (
     <Menu vertical inverted fluid>
       {roomStore.rooms.map((room) => (
-
-            <Menu.Item key={room.id} as={NavLink} className="menuItem" onClick={() => roomStore.setSelectedRoom(room.id)}>
-              <div className="menuItemTextWrapper">
-                {room.name}: {room.id}
-              </div>
-
-
-              { room.ownerId === userStore.user?.id ?
-                <Button inverted animated='fade' className='delete' onClick={() => roomStore.delete(room.id)}>
-                <Button.Content visible> <Icon name="trash"/> </Button.Content>
-                <Button.Content hidden>Delete</Button.Content>
-              </Button>
-                  : <></>
-              }
-
-            </Menu.Item>
+        <div className="menuItemContainer" key={room.id}>
+          <Menu.Item
+            as={NavLink}
+            className="menuItem"
+            onClick={() => roomStore.setSelectedRoom(room.id)}
+          >
+            <div className="menuItemTextWrapper">{room.name}</div>
+          </Menu.Item>
+          <Button
+            floated="right"
+            inverted
+            animated="fade"
+            className="delete"
+            onClick={() => roomStore.delete(room.id)}
+          >
+            <Button.Content visible>
+              <Icon name="trash" />
+            </Button.Content>
+            <Button.Content hidden>Delete</Button.Content>
+          </Button>
+        </div>
       ))}
     </Menu>
   );

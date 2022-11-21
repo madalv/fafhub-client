@@ -1,8 +1,30 @@
 .messageList {
-    overflow-y: scroll;
-    border: violet;
+  overflow-y: scroll;
+  height: 82%;
+  border: violet;
 }
 
 .textInput {
-    position: absolute;
+  position: absolute;
+}
+.dateContainer {
+  display: flex;
+  align-items: center;
+}
+.date {
+  margin: 0% 5%;
+}
+.dateContainer .line {
+  flex: 1;
+  height: 2px;
+  color: white;
+  border: transparent;
+  background-image: linear-gradient(90deg, violet, transparent);
+}
+.dateContainer .rightLine {
+  flex: 1;
+  height: 2px;
+  color: white;
+  border: transparent;
+  background-image: linear-gradient(90deg, transparent, violet);
 }
