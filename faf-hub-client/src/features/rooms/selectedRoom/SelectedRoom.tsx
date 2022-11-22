@@ -14,6 +14,7 @@ import AddUserPopup from "./AddUserPopup";
 
 const SelectedRoom: React.FC = () => {
   const { roomStore, wsStore, userStore } = useStore();
+
   // todo move this somewhere else
   useEffect(() => {
     wsStore.ws!!.onmessage = (event) => {
@@ -49,7 +50,7 @@ const SelectedRoom: React.FC = () => {
           break;
       }
     };
-  });
+  }, [roomStore]);
 
   return (
     <>
@@ -100,7 +101,7 @@ const SelectedRoom: React.FC = () => {
                     </div>
                   );
                 })()}
-                <div>{message.text}</div>
+                <div>{message.text} {userStore.getUserInfo(message.userId) === undefined ? "unknown": userStore.getUserInfo(message.userId)?.email}</div>
               </div>
             ))
         ) : (

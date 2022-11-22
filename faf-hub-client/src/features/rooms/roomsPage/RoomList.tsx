@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite";
 import { NavLink } from "react-router-dom";
 
 const RoomList: React.FC = () => {
-  const { roomStore } = useStore();
+  const { roomStore, userStore } = useStore();
 
   useEffect(() => {
     roomStore.loadRooms().then();
@@ -22,18 +22,20 @@ const RoomList: React.FC = () => {
           >
             <div className="menuItemTextWrapper">{room.name}</div>
           </Menu.Item>
-          <Button
+          {room.ownerId === userStore.user?.id ?
+            <Button
             floated="right"
             inverted
             animated="fade"
             className="delete"
             onClick={() => roomStore.delete(room.id)}
-          >
+            >
             <Button.Content visible>
-              <Icon name="trash" />
+            <Icon name="trash" />
             </Button.Content>
             <Button.Content hidden>Delete</Button.Content>
-          </Button>
+            </Button> : <></>}
+
         </div>
       ))}
     </Menu>
