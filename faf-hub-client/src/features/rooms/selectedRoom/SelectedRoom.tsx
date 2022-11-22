@@ -4,6 +4,8 @@ import { useStore } from "../../../app/stores/store";
 import "./styles.css";
 import { Message } from "../../../app/models/Message";
 import AddUserPopup from "./AddUserPopup";
+import {useNavigate} from "react-router-dom";
+import CreateRoom from "../roomCreationForm/CreateRoom";
 
 // TODO refactor
 
@@ -13,9 +15,17 @@ import AddUserPopup from "./AddUserPopup";
 // TODO validate message
 
 const SelectedRoom: React.FC = () => {
-  const { roomStore, wsStore, userStore } = useStore();
+  const { roomStore, wsStore, userStore, modalStore } = useStore();
+
   // todo move this somewhere else
   useEffect(() => {
+    // roomStore.loadRooms().then(() => {
+    //   if (roomStore.rooms[0] === undefined) {
+    //     modalStore.openModal(<CreateRoom />)
+    //   } else roomStore.setSelectedRoom(roomStore.rooms[0].id).then()
+    // })
+
+
     wsStore.ws!!.onmessage = (event) => {
       let msg = JSON.parse(event.data) as Message;
       console.log(msg);
@@ -49,7 +59,7 @@ const SelectedRoom: React.FC = () => {
           break;
       }
     };
-  });
+  }, [roomStore]);
 
   return (
     <>
@@ -93,6 +103,7 @@ const SelectedRoom: React.FC = () => {
                     </>
                   ) : (
                     <div className="time">
+                      {userStore.getUserInfo(message.userId) === undefined ? "unknown": userStore.getUserInfo(message.userId)?.email}
                       {date.toLocaleString("en-US", {
                         minute: "2-digit",
                         hour: "2-digit",
@@ -100,7 +111,7 @@ const SelectedRoom: React.FC = () => {
                     </div>
                   );
                 })()}
-                <div>{message.text}</div>
+                <div>{message.text} </div>
               </div>
             ))
         ) : (
