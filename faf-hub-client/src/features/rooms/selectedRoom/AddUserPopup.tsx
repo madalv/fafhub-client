@@ -3,6 +3,12 @@ import { Button, Popup, Input } from "semantic-ui-react";
 import { observer } from "mobx-react-lite";
 import { store } from "../../../app/stores/store";
 
+const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Enter") {
+        handleAddUser();
+    }
+};
+
 const handleAddUser = () => {
   let ws = store.wsStore.ws;
   const input = document.getElementById("emailInput") as HTMLInputElement;
@@ -28,6 +34,7 @@ const AddUserPopup: React.FC = () => {
   return (
     <Popup trigger={<Button inverted>Add User</Button>} on="click" inverted>
       <Input
+          onKeyDown={handleKeyDown}
         id="emailInput"
         placeholder="Enter user email"
         action={{

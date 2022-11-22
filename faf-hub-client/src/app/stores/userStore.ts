@@ -13,7 +13,7 @@ export default class UserStore {
 
 setAllUsers = async () => {
   this.allUsers = await agent.Account.getAllUsers()
-  console.log(JSON.stringify(this.allUsers))
+  //console.log(JSON.stringify(this.allUsers))
   }
 
   get isLoggedIn() {

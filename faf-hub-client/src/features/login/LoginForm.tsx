@@ -14,7 +14,10 @@ const LoginForm: React.FC = () => {
       onSubmit={(values, { setErrors }) =>
         userStore
           .login(values)
-          .then(() => navigate("/rooms"))
+          .then(() => {
+              navigate("/community")
+              //window.location.reload();
+          })
           .catch((error) => {
             console.log(error);
             setErrors({ error: "Invalid email or password" });
