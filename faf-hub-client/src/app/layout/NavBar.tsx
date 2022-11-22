@@ -4,11 +4,10 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { Image, Menu } from "semantic-ui-react";
 import { useStore } from "../stores/store";
-import CreateRoom from "../../features/rooms/roomCreationForm/CreateRoom";
 
 
 const NavBar: React.FC = () => {
-  const { userStore, roomStore, modalStore } = useStore();
+  const { userStore } = useStore();
   return (
     <>
       {userStore.isLoggedIn && (
@@ -33,14 +32,17 @@ const NavBar: React.FC = () => {
               </Menu.Item>
               <Menu.Item
                 as={NavLink}
+                to="/chats"
+                className="menuItem"
+                name="chats"
+              >
+                Chats
+              </Menu.Item>
+              <Menu.Item
+                as={NavLink}
                 to="/rooms"
                 className="menuItem"
                 name="rooms"
-                onClick={() => {
-                  if (roomStore.rooms[0] === undefined) {
-                        modalStore.openModal(<CreateRoom />)
-                      } else roomStore.setSelectedRoom(roomStore.rooms[0].id).then()
-                }}
               >
                 Rooms
               </Menu.Item>

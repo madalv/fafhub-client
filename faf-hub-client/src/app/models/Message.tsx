@@ -9,7 +9,13 @@ export interface Message extends Base {
 			| "AddUser" | "RemoveUser" | "CreateRoom" | "UpdateRoom" | "DeleteRoom"
 	targetId: string
 	room?: Room
-	userId: string
+	userId?: string
 	user?: User
 }
 
+// export interface WebsocketMessage {
+// 	text: string,
+// 	command: string,
+// 	targetId: string,
+// 	roomId: string
+// }
