@@ -18,18 +18,13 @@ const App: React.FC = () => {
         wsStore.connect();
 
         roomStore.setGeneralRoom().then(() => {
-          console.log("set general")
-          userStore.setAllUsers().then(() => {
-            console.log("set all users")
-            roomStore.loadRooms().then(() => commonStore.setIsLoaded(true))
-
-          });
+          userStore.setAllUsers().then(() => commonStore.setIsLoaded(true));
         });
       });
     } else {
       commonStore.setIsLoaded(true);
     }
-  }, [commonStore.token]);
+  }, [commonStore, userStore, wsStore, roomStore]);
   return (
     <>
       <ModalContainer />
