@@ -12,7 +12,8 @@ export default class UserStore {
   }
 
 setAllUsers = async () => {
-  //this.allUsers = await agent.Account.getAllUsers()
+
+  this.allUsers = await agent.Account.getAllUsers()
   console.log(JSON.stringify(this.allUsers))
   }
 
