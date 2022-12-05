@@ -4,11 +4,8 @@ import { useStore } from "../../../app/stores/store";
 import "./styles.css";
 import { Message } from "../../../app/models/Message";
 import AddUserPopup from "./AddUserPopup";
+import CreateRoom from "../roomCreationForm/CreateRoom";
 
-// TODO refactor
-
-// TODO fix message duplication after logout -> login
-// login 3 times, message is duplicated 3 times, even w diff accounts
 
 // TODO validate message
 

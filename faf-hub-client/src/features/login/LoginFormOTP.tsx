@@ -1,0 +1,65 @@
+import React from "react";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import { Button, Label } from "semantic-ui-react";
+import { useStore } from "../../app/stores/store";
+import { observer } from "mobx-react-lite";
+import { useNavigate } from "react-router-dom";
+
+const LoginFormOTP: React.FC = () => {
+    const { userStore } = useStore();
+    let navigate = useNavigate();
+    return (
+        <Formik
+            initialValues={{ email: "", password: "", otp: "", error: null }}
+            onSubmit={(values, { setErrors }) =>
+                userStore
+                    .login(values)
+                    .then(() => {
+                        navigate("/community")
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        setErrors({ error: "Invalid email or password" });
+                    })
+            }
+        >
+            {({ handleSubmit, isSubmitting, errors }) => (
+                <Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
+                    <label htmlFor="email">Email</label>
+                    <Field
+                        id="email"
+                        name="email"
+                        placeholder="john@smith.com"
+                        type="email"
+                    />
+                    <label htmlFor="password">Password</label>
+                    <Field id="password" name="password" type="password" />
+
+                    <label htmlFor="otp">OTP</label>
+                    <Field id="otp" name="otp" type="text" />
+
+                    <ErrorMessage
+                        name="error"
+                        render={() => (
+                            <Label
+                                style={{ margin: 10 }}
+                                basic
+                                color="red"
+                                content={errors.error}
+                            />
+                        )}
+                    />
+                    <Button
+                        loading={isSubmitting}
+                        positive
+                        content="Login"
+                        type="submit"
+                        fluid
+                    ></Button>
+                </Form>
+            )}
+        </Formik>
+    );
+};
+
+export default observer(LoginFormOTP);

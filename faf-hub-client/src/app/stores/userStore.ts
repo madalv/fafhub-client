@@ -1,4 +1,4 @@
-import {User, UserFormValues} from "../models/User";
+import {User, UserEmail, UserFormValues} from "../models/User";
 import {makeAutoObservable, runInAction} from "mobx";
 import {agent} from "../api/agent";
 import {store} from "./store";
@@ -22,6 +22,7 @@ setAllUsers = async () => {
 
   login = async (creds: UserFormValues) => {
     try {
+      console.log(creds)
       const token = await agent.Account.login(creds);
       store.commonStore.setToken(token.token);
       // store.roomStore.setSelectedRoom(store.roomStore.generalRoomId)
@@ -58,6 +59,7 @@ setAllUsers = async () => {
 
   register = async (creds: UserFormValues) => {
     try {
+      console.log(creds)
       await agent.Account.register(creds);
       store.modalStore.closeModal();
     } catch (error) {
@@ -65,4 +67,14 @@ setAllUsers = async () => {
       throw error;
     }
   };
+
+  sendOtp = async (email: UserEmail) => {
+    try {
+      await agent.Account.sendOtp(email)
+      store.modalStore.closeModal();
+    } catch (error) {
+      console.log(error)
+      throw error;
+    }
+  }
 }

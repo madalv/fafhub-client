@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { CreateRoom, Room } from "../models/Room";
-import { User, UserFormValues } from "../models/User";
+import {User, UserEmail, UserFormValues} from "../models/User";
 import { store } from "../stores/store";
 import { Message } from "../models/Message";
 
@@ -37,12 +37,11 @@ const Rooms = {
 
 const Account = {
   current: () => requests.get<User>(`/users/current`),
-  login: (user: UserFormValues) => requests.post<User>(`users/login`, user),
-  register: (user: UserFormValues) =>
-    requests.post<User>(`users/register`, user),
-  getUsersByEmail: (email: string) =>
-    requests.get<User[]>(`users/email/${email}`),
-  getAllUsers: () => requests.get<User[]>(`users`),
+  login: (user: UserFormValues) => requests.post<User>(`/users/login-otp`, user),
+  register: (user: UserFormValues) => requests.post<User>(`/users/register-otp`, user),
+  getUsersByEmail: (email: string) => requests.get<User[]>(`/users/email/${email}`),
+  getAllUsers: () => requests.get<User[]>(`/users/all`),
+  sendOtp: (userEmail: UserEmail) => requests.post<User>(`/users/send-otp`, userEmail)
 };
 
 export const agent = {

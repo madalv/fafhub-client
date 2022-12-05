@@ -18,7 +18,12 @@ const App: React.FC = () => {
         wsStore.connect();
 
         roomStore.setGeneralRoom().then(() => {
-          userStore.setAllUsers().then(() => commonStore.setIsLoaded(true));
+
+          //console.log("set general")
+          userStore.setAllUsers().then(() => {
+            //console.log("set all users")
+            roomStore.loadRooms().then(() => commonStore.setIsLoaded(true))
+          });
         });
       });
     } else {
