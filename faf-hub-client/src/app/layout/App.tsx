@@ -29,7 +29,7 @@ const App: React.FC = () => {
     } else {
       commonStore.setIsLoaded(true);
     }
-  }, [commonStore, userStore, wsStore, roomStore]);
+  }, [commonStore.token]);
   return (
     <>
       <ModalContainer />

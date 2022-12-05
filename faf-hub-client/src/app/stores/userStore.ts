@@ -11,14 +11,17 @@ export default class UserStore {
     makeAutoObservable(this);
   }
 
-setAllUsers = async () => {
-
-  this.allUsers = await agent.Account.getAllUsers()
-  console.log(JSON.stringify(this.allUsers))
+  setAllUsers = async () => {
+    this.allUsers = await agent.Account.getAllUsers()
+    //console.log(JSON.stringify(this.allUsers))
   }
 
   get isLoggedIn() {
     return !!this.user;
+  }
+
+  getUserInfo = (userId: string): User | undefined => {
+    return this.allUsers?.find(u => u.id === userId)
   }
 
   login = async (creds: UserFormValues) => {
