@@ -6,6 +6,9 @@ import { useStore } from "../../app/stores/store";
 import LoginForm from "../login/LoginForm";
 import RegisterForm from "../register/RegisterForm";
 import "./styles.css";
+import SendOTPForm from "../register/SendOTPForm";
+import LoginFormOTP from "../login/LoginFormOTP";
+import RegisterFormOTP from "../register/RegisterFormOTP";
 
 export default observer(function HomePage() {
     const { userStore, modalStore} = useStore();
@@ -29,14 +32,14 @@ export default observer(function HomePage() {
           ) : (
             <>
               <Button
-                onClick={() => modalStore.openModal(<LoginForm />)}
+                onClick={() => modalStore.openModal(<SendOTPForm key={null} type={undefined} props={<LoginFormOTP/>} />)}
                 size="huge"
                 inverted
               >
                 Login
               </Button>
               <Button
-                onClick={() => modalStore.openModal(<RegisterForm />)}
+                onClick={() => modalStore.openModal(<SendOTPForm key={null} type={undefined} props={<RegisterFormOTP/>} />)}
                 size="huge"
                 inverted
               >

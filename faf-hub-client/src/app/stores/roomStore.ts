@@ -61,7 +61,7 @@ export default class RoomStore {
     this.setSelectedRoomId(roomId);
     console.log(this.selectedRoom!!.name);
     this.loadMessagesForRoom(this.selectedRoom!!).then();
-    this.loadUsersForRoom(this.selectedRoom!!).then();
+    this.loadUsersForRoom(this.selectedRoom!!).then(() => console.log(this.selectedRoom!!.name));
   };
 
   loadUsersForRoom = async (room: Room) => {
@@ -95,7 +95,20 @@ export default class RoomStore {
   };
 
   addNewMessageToRoom = (roomId: string, message: Message) => {
-    const room = this.rooms.find((r) => r.id === roomId);
+
+    let room: Room | null
+    switch (roomId) {
+      case this.generalRoomId:
+        room = this.generalRoom;
+        break;
+      case this.announcementsRoomId:
+        room = this.announcementsRoom;
+        break;
+      default:
+        // @ts-ignore
+        room = this.rooms.find((r) => r.id === roomId);
+        break;
+    }
     //console.log("messages: " + JSON.stringify(room!!.messages))
     this.setMessages(room!!, [message, ...room!!.messages]);
   };

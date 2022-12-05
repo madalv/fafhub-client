@@ -17,8 +17,10 @@ export interface UserFormValues {
 	phone?: string
 	firstName?: string
 	lastName?: string
+	otp?: string
 }
 
-export interface SearchByEmail {
+export interface UserEmail {
 	email: string
 }
+
