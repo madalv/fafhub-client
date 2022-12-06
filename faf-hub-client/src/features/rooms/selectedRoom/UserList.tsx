@@ -2,6 +2,7 @@ import { useStore } from "../../../app/stores/store";
 import { Icon, Menu } from "semantic-ui-react";
 import { NavLink } from "react-router-dom";
 import { observer } from "mobx-react-lite";
+import React from "react";
 
 const UserList: React.FC = () => {
   const { roomStore, userStore } = useStore();
@@ -12,24 +13,16 @@ const UserList: React.FC = () => {
       ? userStore.allUsers
       : roomStore.selectedRoom?.users;
 
-  // console.log(JSON.stringify(users));
-  // console.log(JSON.stringify(userStore.allUsers))
-
-  // useEffect(() => {
-  //   // wsStore.ws!!.onclose = (event) => {
-  //   //   roomStore.loadUsersForRoom(roomStore.selectedRoom!!.id).then()
-  //   // }
-  //
-  // }, [wsStore]);
-
   return (
     <Menu vertical inverted fluid>
       {users ? (
-        users.map((user) => (
+        users.slice()
+            .sort((a, b) => Number(b.isOnline) - Number(a.isOnline))
+            .map((user) => (
           <Menu.Item key={user.id} as={NavLink} className="menuItem">
             <div className="menuItemTextWrapper">
               {user.isOnline ? <Icon name="circle" color="green" /> : <></>}
-              {user.email}
+              <span>{user.firstName} {user.lastName} ({user.email})</span>
             </div>
             {/*<Button inverted animated='fade' className='delete'>*/}
             {/*    <Button.Content visible> <Icon name="trash" /> </Button.Content>*/}

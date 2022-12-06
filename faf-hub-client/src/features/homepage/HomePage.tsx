@@ -3,8 +3,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Image } from "semantic-ui-react";
 import { useStore } from "../../app/stores/store";
-import LoginForm from "../login/LoginForm";
-import RegisterForm from "../register/RegisterForm";
 import "./styles.css";
 import SendOTPForm from "../register/SendOTPForm";
 import LoginFormOTP from "../login/LoginFormOTP";

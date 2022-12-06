@@ -4,6 +4,7 @@ import { Button, Label } from "semantic-ui-react";
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
+import {LoginSchema} from "../../app/validation/validation";
 
 const LoginFormOTP: React.FC = () => {
     const { userStore } = useStore();
@@ -19,23 +20,23 @@ const LoginFormOTP: React.FC = () => {
                     })
                     .catch((error) => {
                         console.log(error);
-                        setErrors({ error: "Invalid email or password" });
+                        setErrors({ error: "Login failed: " + error.response.data.error });
                     })
             }
+            validationSchema={LoginSchema}
         >
-            {({ handleSubmit, isSubmitting, errors }) => (
+            {({ handleSubmit, isSubmitting, errors, touched }) => (
                 <Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
                     <label htmlFor="email">Email</label>
-                    <Field
-                        id="email"
-                        name="email"
-                        placeholder="john@smith.com"
-                        type="email"
-                    />
+                    {errors.email && touched.email ? (<Label style={{margin: 10}} basic color='red' content={errors.email}/>) : null}
+                    <Field id="email" name="email" placeholder="john@smith.com" type="email"/>
+
                     <label htmlFor="password">Password</label>
+                    {errors.password && touched.password ? (<Label style={{margin: 10}} basic color='red' content={errors.password}/>) : null}
                     <Field id="password" name="password" type="password" />
 
                     <label htmlFor="otp">OTP</label>
+                    {errors.otp && touched.otp ? (<Label style={{margin: 10}} basic color='red' content={errors.otp}/>) : null}
                     <Field id="otp" name="otp" type="text" />
 
                     <ErrorMessage
