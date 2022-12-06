@@ -6,19 +6,12 @@ import { Message } from "../../../app/models/Message";
 import AddUserPopup from "./AddUserPopup";
 import CreateRoom from "../roomCreationForm/CreateRoom";
 
-// TODO validate message
 
 const SelectedRoom: React.FC = () => {
-  const { roomStore, wsStore, userStore, modalStore } = useStore();
+  const { roomStore, wsStore, userStore} = useStore();
 
   // todo move this somewhere else
   useEffect(() => {
-    // roomStore.loadRooms().then(() => {
-    //   if (roomStore.rooms[0] === undefined) {
-    //     modalStore.openModal(<CreateRoom />)
-    //   } else roomStore.setSelectedRoom(roomStore.rooms[0].id).then()
-    // })
-
 
     wsStore.ws!!.onmessage = (event) => {
       let msg = JSON.parse(event.data) as Message;
@@ -74,7 +67,10 @@ const SelectedRoom: React.FC = () => {
                   .reverse()
                   .map((message, index, array) => (
                       <div key={message.id} className="message">
+
+                        {/*todo aranjeaza cumva normal huineaua asta pls*/}
                         {(() => {
+                          let user = userStore.getUserInfo(message.userId!!)
                           let date = new Date(message.createdAt);
                           let previousDate =
                               index > 0 ? new Date(array[index - 1].createdAt) : null;
@@ -88,6 +84,7 @@ const SelectedRoom: React.FC = () => {
                         </span>
                                   <hr className="rightLine" />
                                 </div>
+                                <span>{user === undefined ? "unknown": `${user?.firstName} ${user?.lastName} @ `}</span>
                                 <span className="time">
                         {date.toLocaleString("en-US", {
                           minute: "2-digit",
@@ -97,7 +94,7 @@ const SelectedRoom: React.FC = () => {
                               </>
                           ) : (
                               <div className="time">
-                                {userStore.getUserInfo(message.userId!!) === undefined ? "unknown": userStore.getUserInfo(message.userId!!)?.email}
+                                <span>{user === undefined ? "unknown": `${user?.firstName} ${user?.lastName} @ `}</span>
                                 {date.toLocaleString("en-US", {
                                   minute: "2-digit",
                                   hour: "2-digit",
@@ -105,6 +102,7 @@ const SelectedRoom: React.FC = () => {
                               </div>
                           );
                         })()}
+
                         <div>{message.text} </div>
                       </div>
                   ))

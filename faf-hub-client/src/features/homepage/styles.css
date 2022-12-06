@@ -4,12 +4,14 @@
   display: grid;
   place-items: center;
 }
+
 .logoContainer {
   width: 35%;
   height: 45%;
   display: grid;
   place-items: center;
 }
+
 .loginRegisterContainer {
   width: 100%;
   display: flex;
