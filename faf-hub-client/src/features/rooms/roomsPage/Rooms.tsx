@@ -8,7 +8,6 @@ import CreateRoom from "../roomCreationForm/CreateRoom";
 import { useNavigate } from "react-router-dom";
 import SelectedRoom from "../selectedRoom/SelectedRoom";
 import UserList from "../selectedRoom/UserList";
-import React from "react";
 import MessageInput from "../selectedRoom/MessageInput";
 import RoomSearchBar from "./RoomSearchBar";
 

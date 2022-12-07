@@ -26,3 +26,13 @@ code {
 #root {
   min-height: 100%;
 }
+.aside image {
+  margin: 0 auto !important;
+}
+.ui.fluid.inverted.text.vertical.menu a {
+  align-self: flex-start;
+  padding-left: 4%;
+}
+.form input {
+  margin-bottom: 10px !important;
+}

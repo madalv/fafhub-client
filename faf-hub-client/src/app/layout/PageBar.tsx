@@ -11,16 +11,16 @@ const PageBar: React.FC = () => {
     <>
       <h3>Page name</h3>
       {userStore.isLoggedIn ? (
-        <Button positive onClick={userStore.logout}>
+        <Button color="purple" onClick={userStore.logout}>
           Log out
         </Button>
       ) : (
         <>
           <Link to="/login">
-            <Button positive>Log in</Button>
+            <Button color="purple">Log in</Button>
           </Link>
           <Link to="/register">
-            <Button positive>Register</Button>
+            <Button color="purple">Register</Button>
           </Link>
         </>
       )}

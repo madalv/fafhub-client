@@ -28,3 +28,18 @@
   border: transparent;
   background-image: linear-gradient(90deg, transparent, violet);
 }
+.message {
+  padding-top: 2em;
+}
+.ui.purple.icon.button {
+  padding: 15px 10px;
+}
+.defaultMessage {
+  padding-left: 1%;
+}
+.envelope.icon {
+  color: #65147f;
+}
+.search.icon {
+  padding-right: 40px;
+}

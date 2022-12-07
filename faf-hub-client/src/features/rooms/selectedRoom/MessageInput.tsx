@@ -1,4 +1,4 @@
-import { Input } from "semantic-ui-react";
+import { Icon, Input } from "semantic-ui-react";
 import React from "react";
 import { store, useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
@@ -35,10 +35,7 @@ const MessageInput: React.FC = () => {
       onKeyDown={handleKeyDown}
       placeholder={`Message @${roomStore.selectedRoom?.name}`}
       action={{
-        color: "purple",
-        labelPosition: "right",
-        content: "Send",
-        icon: { name: "envelope" },
+        icon: { name: "envelope", size: "large" },
         onClick: () => handleSend(),
       }}
     />

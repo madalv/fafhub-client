@@ -6,7 +6,6 @@ import { Image, Menu } from "semantic-ui-react";
 import { useStore } from "../stores/store";
 import CreateRoom from "../../features/rooms/roomCreationForm/CreateRoom";
 
-
 const NavBar: React.FC = () => {
   const { userStore, roomStore, modalStore } = useStore();
   return (
@@ -15,12 +14,13 @@ const NavBar: React.FC = () => {
         <div className="container">
           <div className="aside">
             <Image src="/assets/faf.png" />
-            <Menu vertical inverted fluid>
+            <Menu text vertical inverted fluid>
               <Menu.Item
-                  as={NavLink}
-                  to="/main"
-                  className="menuItem"
-                  name="main">
+                as={NavLink}
+                to="/main"
+                className="menuItem"
+                name="main"
+              >
                 Main
               </Menu.Item>
               <Menu.Item
@@ -33,32 +33,17 @@ const NavBar: React.FC = () => {
               </Menu.Item>
               <Menu.Item
                 as={NavLink}
-                to="/chats"
-                className="menuItem"
-                name="chats"
-              >
-                Chats
-              </Menu.Item>
-              <Menu.Item
-                as={NavLink}
                 to="/rooms"
                 className="menuItem"
                 name="rooms"
                 onClick={() => {
                   if (roomStore.rooms[0] === undefined) {
-                        modalStore.openModal(<CreateRoom />)
-                      } else roomStore.setSelectedRoom(roomStore.rooms[0].id).then()
+                    modalStore.openModal(<CreateRoom />);
+                  } else
+                    roomStore.setSelectedRoom(roomStore.rooms[0].id).then();
                 }}
               >
                 Rooms
-              </Menu.Item>
-              <Menu.Item
-                as={NavLink}
-                to="/files"
-                className="menuItem"
-                name="files"
-              >
-                Files
               </Menu.Item>
             </Menu>
           </div>

@@ -43,6 +43,11 @@ h1 {
 .roomRight {
   flex: 1;
 }
+
+.roomButton {
+  max-height: 40px;
+}
+
 .roomListContainer {
   flex: 1;
   border-radius: 2%;
@@ -63,6 +68,11 @@ h1 {
 .menuItemContainer {
   display: flex;
   justify-content: space-between;
+}
+.ui.fluid.inverted.vertical.menu {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
 }
 .menuItemTextWrapper {
   max-width: 80%;
@@ -88,4 +98,15 @@ h1 {
   top: 0;
   right: 3%;
   height: 5%;
+}
+.ui.transparent.icon.input.searchBar input {
+  color: white;
+  border-style: solid;
+  border-color: grey !important;
+  padding: 10px 20px !important;
+  border-radius: 5px !important;
+}
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: grey !important;
 }
