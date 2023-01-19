@@ -2,4 +2,19 @@
   display: flex;
   column-gap: 1em;
   color: white;
+  align-items: center;
+}
+.nameContainer {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+.ui.avatar.image.avatarImage {
+  width: 3em;
+  height: 3em;
+}
+img,
+picture {
+  max-width: 100%;
+  display: block;
 }

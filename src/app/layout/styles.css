@@ -36,3 +36,7 @@ code {
 .form input {
   margin-bottom: 10px !important;
 }
+
+.navIcon {
+  padding-right: 1.5em;
+}

@@ -2,9 +2,8 @@ import React, { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../app/stores/store";
 import "./styles.css";
-import { Message } from "../../../app/models/Message";
 import AddUserPopup from "./AddUserPopup";
-import CreateRoom from "../roomCreationForm/CreateRoom";
+import { Image } from "semantic-ui-react";
 
 const SelectedRoom: React.FC = () => {
   const { roomStore, wsStore, userStore } = useStore();
@@ -12,7 +11,7 @@ const SelectedRoom: React.FC = () => {
   // todo move this somewhere else
   useEffect(() => {
     wsStore.ws!!.onmessage = (event) => {
-      let msg = JSON.parse(event.data) as Message;
+      let msg = JSON.parse(event.data);
       console.log(msg);
 
       // todo room.messages is undefined
@@ -44,7 +43,7 @@ const SelectedRoom: React.FC = () => {
           break;
       }
     };
-  }, [roomStore]);
+  }, [roomStore, wsStore.ws]);
 
   return (
     <>
@@ -62,65 +61,78 @@ const SelectedRoom: React.FC = () => {
       )}
 
       <div className="messageList">
-        {roomStore.selectedRoom?.messages ? (
-          roomStore.selectedRoom?.messages
-            .slice()
-            .reverse()
-            .map((message, index, array) => (
-              <div key={message.id} className="message">
-                {/*todo aranjeaza cumva normal huineaua asta pls*/}
-                {(() => {
-                  let user = userStore.getUserInfo(message.userId!!);
-                  let date = new Date(message.createdAt);
-                  let previousDate =
-                    index > 0 ? new Date(array[index - 1].createdAt) : null;
-                  return previousDate?.toLocaleDateString("en-GB") !==
-                    date.toLocaleDateString("en-GB") ? (
-                    <>
-                      <div className="dateContainer">
-                        <hr className="line" />
-                        <span className="date">
-                          {date.toLocaleDateString("en-GB")}
-                        </span>
-                        <hr className="rightLine" />
-                      </div>
-                      <span>
-                        <b>
-                          {user === undefined
-                            ? "unknown"
-                            : `${user?.firstName} ${user?.lastName} `}
-                        </b>
-                      </span>
-                      <span className="time">
-                        {date.toLocaleString("en-US", {
-                          minute: "2-digit",
-                          hour: "2-digit",
-                        })}
-                      </span>
-                    </>
-                  ) : (
-                    <div className="time">
-                      <span>
-                        <b>
-                          {user === undefined
-                            ? "unknown"
-                            : `${user?.firstName} ${user?.lastName} `}
-                        </b>
-                      </span>
-                      {date.toLocaleString("en-US", {
-                        minute: "2-digit",
-                        hour: "2-digit",
-                      })}
-                    </div>
-                  );
-                })()}
+        <div className="messagesContainer">
+          {roomStore.selectedRoom?.messages ? (
+            roomStore.selectedRoom?.messages
+              .slice()
+              .reverse()
+              .map((message, index, array) => (
+                <div className="messageWrapper" key={message.id}>
+                  <div className="dateContainer">
+                    {(() => {
+                      let date = new Date(message.createdAt);
+                      let previousDate =
+                        index > 0 ? new Date(array[index - 1].createdAt) : null;
+                      return (
+                        previousDate?.toLocaleDateString("en-GB") !==
+                          date.toLocaleDateString("en-GB") && (
+                          <>
+                            <hr className="line" />
+                            <span className="date">
+                              {date.toLocaleDateString("en-GB")}
+                            </span>
+                            <hr className="rightLine" />
+                          </>
+                        )
+                      );
+                    })()}
+                  </div>
+                  <div className="message">
+                    <Image
+                      className="avatarImage"
+                      avatar
+                      size="huge"
+                      // src="/assets/user_placeholder.png"
+                      src={userStore.getUserInfo(message.userId!)?.avatarUri}
+                    />
+                    <div className="message__hero">
+                      {(() => {
+                        let user = userStore.getUserInfo(message.userId!!);
+                        let date = new Date(message.createdAt);
+                        return (
+                          <>
+                            <div className="nameContainer yellow">
+                              <b>
+                                {user === undefined
+                                  ? "unknown"
+                                  : `${user?.firstName} ${user?.lastName} `}
+                              </b>
+                            </div>
+                            <div
+                              className={`messageTextWrapper ${
+                                user?.id === userStore.user?.id ? "isOwner" : ""
+                              }`}
+                            >
+                              {message.text}
+                            </div>
 
-                <div>{message.text} </div>
-              </div>
-            ))
-        ) : (
-          <div className="defaultMessage">It's kind of quiet here... </div>
-        )}
+                            <span className="time">
+                              {date.toLocaleString("en-US", {
+                                minute: "2-digit",
+                                hour: "2-digit",
+                              })}
+                            </span>
+                          </>
+                        );
+                      })()}
+                    </div>
+                  </div>
+                </div>
+              ))
+          ) : (
+            <div className="defaultMessage">It's kind of quiet here... </div>
+          )}
+        </div>
       </div>
     </>
   );

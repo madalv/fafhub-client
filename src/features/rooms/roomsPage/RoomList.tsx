@@ -15,25 +15,31 @@ const RoomList: React.FC = () => {
     <Menu vertical inverted fluid>
       {roomStore.rooms.map((room) => (
         <div className="menuItemContainer" key={room.id}>
-          <Menu.Item
-            as={NavLink}
-            className="menuItem"
-            onClick={() => roomStore.setSelectedRoom(room.id)}
-          >
-            <div className="menuItemTextWrapper">{room.name}</div>
-          </Menu.Item>
-          <Button
-            floated="right"
-            inverted
-            animated="fade"
-            className="delete"
-            onClick={() => roomStore.delete(room.id)}
-          >
-            <Button.Content visible>
-              <Icon name="trash" />
-            </Button.Content>
-            <Button.Content hidden>Delete</Button.Content>
-          </Button>
+          <div className="menuItemWrapper">
+            <Menu.Item
+              as={NavLink}
+              className="menuItem"
+              id="menuItem"
+              onClick={() => roomStore.setSelectedRoom(room.id)}
+            >
+              {room.name}
+            </Menu.Item>
+          </div>
+          <div className="menuItemWrapper">
+            <Button
+              floated="right"
+              inverted
+              size="mini"
+              animated="fade"
+              className="deleteButton"
+              onClick={() => roomStore.delete(room.id)}
+            >
+              <Button.Content visible>
+                <Icon name="trash" />
+              </Button.Content>
+              <Button.Content hidden>Delete</Button.Content>
+            </Button>
+          </div>
         </div>
       ))}
     </Menu>

@@ -2,15 +2,28 @@
   background: rgb(24, 24, 48);
   height: 100vh;
 }
+
+.generic__wrapper {
+  padding-top: 1em;
+  width: 90%;
+  margin: 0 auto;
+}
 .roomsHeader {
   display: flex;
-  padding: 2% 0 0 3.4%;
+  justify-content: space-between;
   color: white;
-  margin-right: 2%;
+  padding: 0 3.3em;
+  align-items: center;
 }
-h1 {
-  flex: 1;
+.roomsHeader > h1 {
+  margin: 0;
 }
+.nav {
+  display: flex;
+  gap: 2em;
+  align-items: center;
+}
+
 .defaultMessage,
 .message {
   color: white;
@@ -67,6 +80,7 @@ h1 {
 }
 .menuItemContainer {
   display: flex;
+  margin-left: 1em;
   justify-content: space-between;
 }
 .ui.fluid.inverted.vertical.menu {
@@ -74,11 +88,12 @@ h1 {
   flex-direction: column;
   row-gap: 10px;
 }
-.menuItemTextWrapper {
-  max-width: 80%;
-  display: inline-block;
-  left: 0;
-  background-color: transparent !important;
+.menuItemWrapper {
+  display: flex;
+  align-items: center;
+}
+#menuItem {
+  padding: 0;
 }
 .ui.inverted.action.input {
   position: absolute;
@@ -109,4 +124,7 @@ h1 {
 ::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: grey !important;
+}
+#menuItem {
+  color: #fbda58 !important;
 }

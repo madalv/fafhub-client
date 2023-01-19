@@ -1,7 +1,9 @@
-import {User, UserEmail, UserFormValues} from "../models/User";
-import {makeAutoObservable, runInAction} from "mobx";
-import {agent} from "../api/agent";
-import {store} from "./store";
+import { User, UserEmail, UserFormValues } from "../models/User";
+import { makeAutoObservable, runInAction } from "mobx";
+import { agent } from "../api/agent";
+import { createAvatar } from "@dicebear/core";
+import * as style from "@dicebear/adventurer";
+import { store } from "./store";
 
 export default class UserStore {
   user: User | null = null;
@@ -12,27 +14,32 @@ export default class UserStore {
   }
 
   setAllUsers = async () => {
-    this.allUsers = await agent.Account.getAllUsers()
-    //console.log(JSON.stringify(this.allUsers))
-  }
+    this.allUsers = await agent.Account.getAllUsers();
+    await Promise.all(
+      this.allUsers.map(async (u) => {
+        await this.generateAvatar(u);
+      })
+    );
+    // console.log(JSON.stringify(this.allUsers));
+  };
 
   get isLoggedIn() {
     return !!this.user;
   }
 
   getUserInfo = (userId: string): User | undefined => {
-    return this.allUsers?.find(u => u.id === userId)
-  }
+    return this.allUsers?.find((u) => u.id === userId);
+  };
 
   login = async (creds: UserFormValues) => {
     try {
-      console.log(creds)
+      console.log(creds);
       const token = await agent.Account.login(creds);
       store.commonStore.setToken(token.token);
       // store.roomStore.setSelectedRoom(store.roomStore.generalRoomId)
-      await store.roomStore.setGeneralRoom()
+      await store.roomStore.setGeneralRoom();
       await this.setUser();
-      store.wsStore.connect()
+      store.wsStore.connect();
       store.modalStore.closeModal();
     } catch (error) {
       throw error;
@@ -40,21 +47,22 @@ export default class UserStore {
   };
 
   getUsersByEmail = async (email: string): Promise<User[]> => {
-    return await agent.Account.getUsersByEmail(email)
-  }
+    return await agent.Account.getUsersByEmail(email);
+  };
 
   logout = () => {
     store.commonStore.setToken(null);
     window.localStorage.removeItem("jwt");
     window.localStorage.removeItem("selroomid");
-    store.roomStore.unsetSelectedRoom()
+    store.roomStore.unsetSelectedRoom();
     this.user = null;
-    store.wsStore.disconnect()
+    store.wsStore.disconnect();
   };
 
   setUser = async () => {
     try {
       const user = await agent.Account.current();
+      await this.generateAvatar(user);
       runInAction(() => (this.user = user));
     } catch (error) {
       console.log(error);
@@ -63,22 +71,29 @@ export default class UserStore {
 
   register = async (creds: UserFormValues) => {
     try {
-      console.log(creds)
+      console.log(creds);
       await agent.Account.register(creds);
       store.modalStore.closeModal();
     } catch (error) {
-      console.log(error)
+      console.log(error);
       throw error;
     }
   };
 
   sendOtp = async (email: UserEmail) => {
     try {
-      await agent.Account.sendOtp(email)
+      await agent.Account.sendOtp(email);
       store.modalStore.closeModal();
     } catch (error) {
-      console.log(error)
+      console.log(error);
       throw error;
     }
-  }
+  };
+  generateAvatar = async (user: User) => {
+    const avatar = createAvatar(style, {
+      seed: `${user.id}`,
+      size: 96,
+    });
+    await avatar.toDataUri().then((data) => (user.avatarUri = data));
+  };
 }

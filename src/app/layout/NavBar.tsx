@@ -2,7 +2,7 @@ import "./styles.css";
 import { observer } from "mobx-react-lite";
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { Image, Menu } from "semantic-ui-react";
+import { Icon, Image, Menu } from "semantic-ui-react";
 import { useStore } from "../stores/store";
 import CreateRoom from "../../features/rooms/roomCreationForm/CreateRoom";
 
@@ -21,6 +21,7 @@ const NavBar: React.FC = () => {
                 className="menuItem"
                 name="main"
               >
+                {<Icon className="navIcon" name="globe" inverted />}
                 Main
               </Menu.Item>
               <Menu.Item
@@ -29,6 +30,7 @@ const NavBar: React.FC = () => {
                 className="menuItem"
                 name="community"
               >
+                {<Icon className="navIcon" name="heart outline" />}
                 Community
               </Menu.Item>
               <Menu.Item
@@ -43,6 +45,7 @@ const NavBar: React.FC = () => {
                     roomStore.setSelectedRoom(roomStore.rooms[0].id).then();
                 }}
               >
+                {<Icon className="navIcon" name="list alternate outline" />}
                 Rooms
               </Menu.Item>
             </Menu>
