@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../app/stores/store";
 import "./styles.css";
@@ -7,7 +7,6 @@ import { Image } from "semantic-ui-react";
 
 const SelectedRoom: React.FC = () => {
   const { roomStore, wsStore, userStore } = useStore();
-
   // todo move this somewhere else
   useEffect(() => {
     wsStore.ws!!.onmessage = (event) => {
@@ -43,8 +42,22 @@ const SelectedRoom: React.FC = () => {
           break;
       }
     };
-  }, [roomStore, wsStore.ws]);
+  }, [roomStore]);
 
+  useEffect(() => {
+    const antiReverseContainer = document.querySelector("#antiReverse");
+    const messagesContainer = document.querySelector("#messagesContainer");
+    const lastMessage = antiReverseContainer?.children[
+      antiReverseContainer.childElementCount - 1
+    ] as HTMLElement;
+    if (lastMessage.dataset.author === userStore.user?.id) {
+      messagesContainer?.scrollTo({
+        top: Number.MAX_SAFE_INTEGER,
+        left: 0,
+        behavior: "smooth",
+      });
+    }
+  }, [roomStore.selectedRoom?.messages]);
   return (
     <>
       {window.location.pathname === "/rooms" ? (
@@ -61,77 +74,88 @@ const SelectedRoom: React.FC = () => {
       )}
 
       <div className="messageList">
-        <div className="messagesContainer">
-          {roomStore.selectedRoom?.messages ? (
-            roomStore.selectedRoom?.messages
-              .slice()
-              .reverse()
-              .map((message, index, array) => (
-                <div className="messageWrapper" key={message.id}>
-                  <div className="dateContainer">
-                    {(() => {
-                      let date = new Date(message.createdAt);
-                      let previousDate =
-                        index > 0 ? new Date(array[index - 1].createdAt) : null;
-                      return (
-                        previousDate?.toLocaleDateString("en-GB") !==
-                          date.toLocaleDateString("en-GB") && (
-                          <>
-                            <hr className="line" />
-                            <span className="date">
-                              {date.toLocaleDateString("en-GB")}
-                            </span>
-                            <hr className="rightLine" />
-                          </>
-                        )
-                      );
-                    })()}
-                  </div>
-                  <div className="message">
-                    <Image
-                      className="avatarImage"
-                      avatar
-                      size="huge"
-                      // src="/assets/user_placeholder.png"
-                      src={userStore.getUserInfo(message.userId!)?.avatarUri}
-                    />
-                    <div className="message__hero">
+        <div className="messagesContainer" id="messagesContainer">
+          <div className="antiReverse" id="antiReverse">
+            {roomStore.selectedRoom?.messages ? (
+              roomStore.selectedRoom?.messages
+                .slice()
+                .reverse()
+                .map((message, index, array) => (
+                  <div
+                    data-author={message.userId}
+                    className="messageWrapper"
+                    key={message.id}
+                  >
+                    <div className="dateContainer">
                       {(() => {
-                        let user = userStore.getUserInfo(message.userId!!);
                         let date = new Date(message.createdAt);
+                        let previousDate =
+                          index > 0
+                            ? new Date(array[index - 1].createdAt)
+                            : null;
                         return (
-                          <>
-                            <div className="nameContainer yellow">
-                              <b>
-                                {user === undefined
-                                  ? "unknown"
-                                  : `${user?.firstName} ${user?.lastName} `}
-                              </b>
-                            </div>
-                            <div
-                              className={`messageTextWrapper ${
-                                user?.id === userStore.user?.id ? "isOwner" : ""
-                              }`}
-                            >
-                              {message.text}
-                            </div>
-
-                            <span className="time">
-                              {date.toLocaleString("en-US", {
-                                minute: "2-digit",
-                                hour: "2-digit",
-                              })}
-                            </span>
-                          </>
+                          previousDate?.toLocaleDateString("en-GB") !==
+                            date.toLocaleDateString("en-GB") && (
+                            <>
+                              <hr className="line" />
+                              <span className="date">
+                                {date.toLocaleDateString("en-GB")}
+                              </span>
+                              <hr className="rightLine" />
+                            </>
+                          )
                         );
                       })()}
                     </div>
+                    <div className="message">
+                      <Image
+                        className="avatarImage"
+                        avatar
+                        size="huge"
+                        // src="/assets/user_placeholder.png"
+                        src={userStore.getUserInfo(message.userId!)?.avatarUri}
+                      />
+                      <div className="message__hero">
+                        {(() => {
+                          let user = userStore.getUserInfo(message.userId!!);
+                          let date = new Date(message.createdAt);
+                          return (
+                            <>
+                              <div className="nameContainer yellow">
+                                <b>
+                                  {user === undefined
+                                    ? "unknown"
+                                    : `${user?.firstName} ${user?.lastName} `}
+                                </b>
+                              </div>
+                              <div className="messageTimeWrapper">
+                                <div
+                                  className={`messageTextWrapper ${
+                                    user?.id === userStore.user?.id
+                                      ? "isOwner"
+                                      : ""
+                                  }`}
+                                >
+                                  {message.text}
+                                </div>
+                                <div className="time">
+                                  {date.toLocaleString("en-US", {
+                                    minute: "2-digit",
+                                    hour: "2-digit",
+                                  })}
+                                </div>
+                              </div>
+                            </>
+                          );
+                        })()}
+                      </div>
+                    </div>
                   </div>
-                </div>
-              ))
-          ) : (
-            <div className="defaultMessage">It's kind of quiet here... </div>
-          )}
+                ))
+            ) : (
+              <div className="defaultMessage">It's kind of quiet here... </div>
+            )}
+          </div>
         </div>
       </div>
     </>

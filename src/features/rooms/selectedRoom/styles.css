@@ -11,6 +11,7 @@
 .messageTextWrapper {
   border: 2px #660658 solid;
   padding: 0.25em 1em;
+
   border-radius: 10px;
 }
 .isOwner {
@@ -24,6 +25,8 @@
   height: 100%;
   padding: 0 2em;
   overflow-y: scroll;
+  display: flex;
+  flex-direction: column-reverse;
 }
 .dateContainer {
   display: flex;
@@ -43,6 +46,9 @@
 }
 .message__hero {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
 }
 .dateContainer .rightLine {
   flex: 1;
@@ -52,8 +58,17 @@
 }
 .time {
   right: 0;
-  position: absolute;
   font-size: 0.75rem;
+  align-self: flex-end;
+}
+#userList {
+  height: 100%;
+  overflow-y: scroll;
+}
+.messageTimeWrapper {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
 }
 .message {
   padding-top: 2em;

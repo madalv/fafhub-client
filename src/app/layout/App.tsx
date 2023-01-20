@@ -28,7 +28,7 @@ const App: React.FC = () => {
     } else {
       commonStore.setIsLoaded(true);
     }
-  }, [commonStore, commonStore.token, roomStore, userStore, wsStore]);
+  }, [commonStore]);
   return (
     <>
       <ModalContainer />

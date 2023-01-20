@@ -61,7 +61,9 @@ export default class RoomStore {
     this.setSelectedRoomId(roomId);
     console.log(this.selectedRoom!!.name);
     this.loadMessagesForRoom(this.selectedRoom!!).then();
-    this.loadUsersForRoom(this.selectedRoom!!).then(() => console.log(this.selectedRoom!!.name));
+    this.loadUsersForRoom(this.selectedRoom!!).then(() =>
+      console.log(this.selectedRoom!!.name)
+    );
   };
 
   loadUsersForRoom = async (room: Room) => {
@@ -95,8 +97,7 @@ export default class RoomStore {
   };
 
   addNewMessageToRoom = (roomId: string, message: Message) => {
-
-    let room: Room | null
+    let room: Room | null;
     switch (roomId) {
       case this.generalRoomId:
         room = this.generalRoom;

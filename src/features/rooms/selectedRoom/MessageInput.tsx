@@ -1,4 +1,4 @@
-import { Icon, Input } from "semantic-ui-react";
+import { Input } from "semantic-ui-react";
 import React from "react";
 import { store, useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
