@@ -32,7 +32,6 @@
   display: flex;
   align-items: center;
   color: white;
-  padding-top: 2em;
 }
 .date {
   margin: 0% 5%;
@@ -65,14 +64,31 @@
   height: 100%;
   overflow-y: scroll;
 }
+#userList::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    rgba(251, 218, 88, 0.28) 0%,
+    rgba(175, 25, 131, 0.28) 100%
+  );
+}
+.messageWrapper {
+  margin-top: 1.2em;
+}
+.messagesContainer::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    rgba(251, 218, 88, 0.28) 0%,
+    rgba(175, 25, 131, 0.28) 100%
+  );
+}
 .messageTimeWrapper {
   display: flex;
   flex-direction: column;
   align-self: flex-start;
 }
 .message {
-  padding-top: 2em;
   display: flex;
+  margin-top: 0.5em;
   justify-content: flex-start;
 }
 .ui.purple.icon.button {
