@@ -3,10 +3,21 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../../app/stores/store";
 import "./styles.css";
 import AddUserPopup from "./AddUserPopup";
-import { Image } from "semantic-ui-react";
+import { Button, Image } from "semantic-ui-react";
 
 const SelectedRoom: React.FC = () => {
+  const scrollBottom = () => {
+    const messagesContainer = document.querySelector("#messagesContainer");
+    messagesContainer?.scrollTo({
+      top: Number.MAX_SAFE_INTEGER,
+      left: 0,
+      behavior: "smooth",
+    });
+    setPopUp(false);
+  };
   const { roomStore, wsStore, userStore } = useStore();
+  const [isPopUp, setPopUp] = useState(false);
+  const [scrollPosition, setScrollPosition] = useState(0);
   // todo move this somewhere else
   useEffect(() => {
     wsStore.ws!!.onmessage = (event) => {
@@ -51,11 +62,9 @@ const SelectedRoom: React.FC = () => {
       antiReverseContainer.childElementCount - 1
     ] as HTMLElement;
     if (lastMessage.dataset.author === userStore.user?.id) {
-      messagesContainer?.scrollTo({
-        top: Number.MAX_SAFE_INTEGER,
-        left: 0,
-        behavior: "smooth",
-      });
+      scrollBottom();
+    } else if (messagesContainer?.scrollTop! < 0 && !isPopUp) {
+      setPopUp(true);
     }
   }, [roomStore.selectedRoom?.messages]);
   return (
@@ -74,7 +83,14 @@ const SelectedRoom: React.FC = () => {
       )}
 
       <div className="messageList">
-        <div className="messagesContainer" id="messagesContainer">
+        <div
+          className="messagesContainer"
+          id="messagesContainer"
+          onScroll={(event) => {
+            setScrollPosition(event.currentTarget.scrollTop);
+            if (scrollPosition >= 0) setPopUp(false);
+          }}
+        >
           <div className="antiReverse" id="antiReverse">
             {roomStore.selectedRoom?.messages ? (
               roomStore.selectedRoom?.messages
@@ -153,7 +169,18 @@ const SelectedRoom: React.FC = () => {
                   </div>
                 ))
             ) : (
-              <div className="defaultMessage">It's kind of quiet here... </div>
+              <Button className="defaultMessage">
+                It's kind of quiet here...
+              </Button>
+            )}
+            {isPopUp && scrollPosition < 0 && (
+              <div
+                onClick={scrollBottom}
+                className="newMessagePopUp"
+                id="newMessagePopUp"
+              >
+                New Message
+              </div>
             )}
           </div>
         </div>

@@ -103,3 +103,21 @@
 .search.icon {
   padding-right: 40px;
 }
+
+.newMessagePopUp {
+  position: absolute;
+  padding: 0.25em 1em;
+  bottom: 6em;
+  background: linear-gradient(
+    90deg,
+    rgba(175, 25, 131, 0.374) 3.65%,
+    rgba(251, 218, 88, 0.493) 100%
+  );
+  border-radius: 5px;
+  color: white;
+  right: 3em;
+  cursor: pointer;
+}
+.newMessagePopUp:hover {
+  opacity: 90%;
+}
