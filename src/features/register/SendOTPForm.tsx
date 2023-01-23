@@ -4,7 +4,6 @@ import { Button, Label } from "semantic-ui-react";
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
 
-// TODO add validation
 
 const SendOTPForm: React.FC<JSX.Element> = ({ props }) => {
   const { userStore, modalStore } = useStore();
@@ -17,7 +16,7 @@ const SendOTPForm: React.FC<JSX.Element> = ({ props }) => {
           .sendOtp(values)
           .then(() => modalStore.openModal(props))
           .catch((error) => {
-            setErrors({ error: "Invalid email or password!" });
+            setErrors({ error: "Error: " + error.response.data.error });
           });
       }}
     >

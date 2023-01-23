@@ -39,6 +39,7 @@ const RoomList: React.FC = () => {
               </Button.Content>
               <Button.Content hidden>Delete</Button.Content>
             </Button>
+             {room.notifications ? <Icon name="circle" color="red" />: <></>}
           </div>
         </div>
       ))}

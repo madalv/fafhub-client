@@ -7,6 +7,7 @@ export interface Room extends Base {
   ownerId: string;
   users: User[];
   messages: Message[];
+  notifications: boolean;
 }
 
 export interface CreateRoom {

@@ -26,14 +26,18 @@ const SelectedRoom: React.FC = () => {
 
       // todo room.messages is undefined
       switch (msg.command) {
-        case "CreateMessage":
-          roomStore.addNewMessageToRoom(roomStore.selectedRoom!!.id, msg);
+        case "CreateMessage": {
+          if (msg.roomId != roomStore.selectedRoom?.id) roomStore.setNotifs(msg.roomId)
+          else roomStore.addNewMessageToRoom(msg.roomId, msg);
           break;
+        }
         case "AddUser":
           roomStore.loadRooms().then(() => {
-            roomStore.setSelectedRoom(msg.roomId);
-            roomStore.loadUsersForRoom(roomStore.selectedRoom!!).then();
-            roomStore.addNewMessageToRoom(roomStore.selectedRoom!!.id, msg);
+            roomStore.setSelectedRoom(msg.roomId).then(() => {
+              roomStore.loadUsersForRoom(roomStore.selectedRoom!!).then();
+              roomStore.addNewMessageToRoom(roomStore.selectedRoom!!.id, msg);
+            })
+
           });
 
           break;

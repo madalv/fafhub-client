@@ -28,6 +28,13 @@ export default class RoomStore {
     );
   }
 
+  setNotifs = (id: string) => {
+    let room: Room | undefined = this.rooms.find((r) => r.id === id);
+    if (room) {
+      room.notifications = true
+    }
+  }
+
   setSelectedRoomId = (id: string) => {
     this.selectedRoomId = id;
   };
@@ -55,7 +62,10 @@ export default class RoomStore {
         break;
       default:
         // @ts-ignore
-        this.selectedRoom = this.rooms.find((r) => r.id === roomId);
+        let room: Room = this.rooms.find((r) => r.id === roomId);
+        room.notifications = false
+        this.selectedRoom = room
+
         break;
     }
     this.setSelectedRoomId(roomId);
