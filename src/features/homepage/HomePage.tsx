@@ -41,12 +41,16 @@ export default observer(function HomePage() {
                 size="huge"
                 inverted
               >
-                Register!
+                Register
               </Button>
             </>
           )}
         </div>
       </div>
+        <div className="contactInfo">
+            {`FAF © ${new Date().getFullYear()} | Contact to get access:`}
+            <a className="contactInfo" href="mailto:faf@fcim.utm.md"> faf@fcim.utm.md</a>
+        </div>
     </div>
   );
 });

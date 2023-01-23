@@ -1,6 +1,6 @@
 import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { Button, Label } from "semantic-ui-react";
+import {Button, Label, Message} from "semantic-ui-react";
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import LoginFormOTP from "../login/LoginFormOTP";
@@ -78,6 +78,11 @@ const RegisterFormOTP: React.FC = () => {
           <Field id="phone" name="phone" type="tel" />
 
           <label htmlFor="email">Email</label>
+            <Message info size="small">
+                <Message.Header style={{"backgroundColor": "inherit"}}>
+                    Please, introduce your university email.
+                </Message.Header>
+            </Message>
           {errors.email && touched.email ? (
             <Label
               style={{ margin: 10 }}
