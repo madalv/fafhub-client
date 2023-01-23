@@ -3,6 +3,15 @@ import YupPassword from 'yup-password'
 YupPassword(Yup);
 
 
+export const EmailOtpSchema = Yup.object().shape({
+    email: Yup.string()
+        .email('Invalid email.')
+        .required('Required field.'),
+    recaptcha:
+        Yup.string()
+            .required('ReCAPTCHA required.')
+})
+
 export const LoginSchema = Yup.object().shape({
     email: Yup.string()
         .email('Invalid email.')

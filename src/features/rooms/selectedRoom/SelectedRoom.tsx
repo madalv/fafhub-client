@@ -26,7 +26,7 @@ const SelectedRoom: React.FC = () => {
       // todo room.messages is undefined
       switch (msg.command) {
         case "CreateMessage": {
-          if (msg.roomId != roomStore.selectedRoom?.id) roomStore.setNotifs(msg.roomId)
+          if (msg.roomId !== roomStore.selectedRoom?.id) roomStore.setNotifs(msg.roomId)
           else roomStore.addNewMessageToRoom(msg.roomId, msg);
           break;
         }

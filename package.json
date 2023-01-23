@@ -53,6 +53,8 @@
   },
   "devDependencies": {
     "@types/react": "^18.0.21",
-    "@types/react-router-dom": "^5.3.3"
+    "@types/react-google-recaptcha": "^2.1.5",
+    "@types/react-router-dom": "^5.3.3",
+    "react-google-recaptcha": "^2.1.0"
   }
 }
