@@ -15,10 +15,11 @@ const SelectedRoom: React.FC = () => {
     });
     setPopUp(false);
   };
+
   const { roomStore, wsStore, userStore } = useStore();
   const [isPopUp, setPopUp] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
-  // todo move this somewhere else
+
   useEffect(() => {
     wsStore.ws!!.onmessage = (event) => {
       let msg = JSON.parse(event.data);
@@ -31,14 +32,7 @@ const SelectedRoom: React.FC = () => {
           break;
         }
         case "AddUser":
-          roomStore.loadRooms().then(() => {
-            roomStore.setSelectedRoom(msg.roomId).then(() => {
-              roomStore.loadUsersForRoom(roomStore.selectedRoom!!).then();
-              roomStore.addNewMessageToRoom(roomStore.selectedRoom!!.id, msg);
-            })
-
-          });
-
+          roomStore.loadRooms().then()
           break;
         case "DeleteRoom":
           roomStore.loadRooms().then();

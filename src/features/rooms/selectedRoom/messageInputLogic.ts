@@ -4,6 +4,7 @@ import React from "react";
 export const MSG_SPAM_TIMEOUT: number = 30000
 const MSG_COUNTER_LIMIT: number = 8
 const MSG_COUNTER_INTERVAL: number = 5000
+export const MAX_MSG_LEN = 500
 
 setInterval(() => checkLimit(), MSG_COUNTER_INTERVAL)
 setTimeout(() => {
@@ -28,7 +29,8 @@ export const handleSend = () => {
     const input = document.getElementById("message") as HTMLInputElement;
     if (store.roomStore.canSendMsg
         && input.value != null
-        && input.value !== "") {
+        && input.value !== ""
+        && input.value.length <= MAX_MSG_LEN) {
         ws!!.send(
             JSON.stringify({
                 text: input.value,
@@ -39,11 +41,5 @@ export const handleSend = () => {
         );
         input.value = "";
         store.roomStore.incMsgCounter()
-    } else console.log("cant send rn")
-};
-
-export const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === "Enter") {
-        handleSend();
     }
 };

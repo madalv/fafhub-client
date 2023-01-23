@@ -3,6 +3,7 @@ import { Button, Icon, Menu } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import { NavLink } from "react-router-dom";
+import "./styles.css";
 
 const RoomList: React.FC = () => {
   const { roomStore } = useStore();
@@ -16,6 +17,10 @@ const RoomList: React.FC = () => {
       {roomStore.rooms.map((room) => (
         <div className="menuItemContainer" key={room.id}>
           <div className="menuItemWrapper">
+            {room.notifications ? <Icon
+                className="notificationIcon"
+                size="small"
+                name="circle" />: <></>}
             <Menu.Item
               as={NavLink}
               className="menuItem"
@@ -39,7 +44,6 @@ const RoomList: React.FC = () => {
               </Button.Content>
               <Button.Content hidden>Delete</Button.Content>
             </Button>
-             {room.notifications ? <Icon name="circle" color="red" />: <></>}
           </div>
         </div>
       ))}
