@@ -21,6 +21,9 @@
 .textInput {
   position: absolute;
 }
+#message > button {
+  background: linear-gradient(136.22deg, #001329 4%, #782493 98.04%);
+}
 .messagesContainer {
   height: 100%;
   padding: 0 2em;
@@ -91,19 +94,32 @@
   margin-top: 0.5em;
   justify-content: flex-start;
 }
-.ui.purple.icon.button {
-  padding: 15px 10px;
-}
+
 .defaultMessage {
   padding-left: 1%;
 }
-.envelope.icon {
-  color: #65147f;
-}
+
 .search.icon {
   padding-right: 40px;
 }
-
+#sendIcon {
+  color: white;
+}
+.ui.inverted.action.input > button.ui.icon {
+  background: linear-gradient(136.22deg, #001329 4%, #782493 98.04%);
+  padding: 0.5em;
+}
+#addUser {
+  background: linear-gradient(96.46deg, #001329 9.97%, #782493 96.95%);
+  border: none;
+  border-radius: 5px;
+  color: white;
+  padding: 0em 1em;
+  cursor: pointer;
+}
+#addUser:hover {
+  opacity: 80%;
+}
 .newMessagePopUp {
   position: absolute;
   padding: 0.25em 1em;

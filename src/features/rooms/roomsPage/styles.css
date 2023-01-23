@@ -5,8 +5,10 @@
 
 .generic__wrapper {
   padding-top: 1em;
-  width: 90%;
+  width: 95%;
   margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
 }
 .roomsHeader {
   display: flex;
@@ -56,11 +58,22 @@
 .roomRight {
   flex: 1;
 }
-
 .roomButton {
-  max-height: 40px;
+  font-size: 0.9rem;
+  background: linear-gradient(96.46deg, #001329 9.97%, #782493 96.95%);
+  border: none;
+  color: white;
+  font-weight: bold;
+  padding: 0.55em 1em;
+  margin: 0;
+  align-self: center;
+  border-radius: 5px;
 }
 
+.roomButton:hover {
+  opacity: 80%;
+  cursor: pointer;
+}
 .roomListContainer {
   flex: 1;
   border-radius: 2%;
@@ -99,7 +112,7 @@
   position: absolute;
   bottom: 0;
   width: 100%;
-  border-color: gray;
+  border-color: #301c4bd9;
   border-radius: 7px;
   border-style: solid;
   border-width: 0.005vw;
@@ -117,7 +130,7 @@
 .ui.transparent.icon.input.searchBar input {
   color: white;
   border-style: solid;
-  border-color: grey !important;
+  border-color: #301c4bd9 !important;
   padding: 10px 20px !important;
   border-radius: 5px !important;
 }

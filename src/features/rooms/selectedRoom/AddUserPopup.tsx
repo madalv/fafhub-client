@@ -26,7 +26,7 @@ const handleAddUser = () => {
 
 const AddUserPopup: React.FC = () => {
   return (
-    <Popup trigger={<Button inverted>Add User</Button>} on="click" inverted>
+    <Popup trigger={<button id="addUser">+ User</button>} on="click" inverted>
       <Input
         id="emailInput"
         placeholder="Enter user email"

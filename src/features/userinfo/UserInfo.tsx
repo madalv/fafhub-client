@@ -10,6 +10,7 @@ export default function UserInfo() {
     <div className="userInfoContainer">
       <Button
         className="roomButton"
+        id="logoutButton"
         onClick={() => {
           userStore.logout();
           navigate("/");

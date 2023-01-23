@@ -18,3 +18,8 @@ picture {
   max-width: 100%;
   display: block;
 }
+
+#logoutButton {
+  background: linear-gradient(96.46deg, #001329 9.97%, #782493 96.95%);
+  color: white;
+}

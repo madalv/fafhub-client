@@ -14,14 +14,14 @@ const NavBar: React.FC = () => {
         <div className="container">
           <div className="aside">
             <Image src="/assets/faf.png" />
-            <Menu text vertical inverted fluid>
+            <Menu text vertical inverted fluid id="navMenu">
               <Menu.Item
                 as={NavLink}
                 to="/main"
                 className="menuItem"
                 name="main"
               >
-                {<Icon className="navIcon" name="globe" inverted />}
+                {<Icon className="navIcon" name="bell outline" />}
                 Main
               </Menu.Item>
               <Menu.Item

@@ -35,7 +35,7 @@ const MessageInput: React.FC = () => {
       onKeyDown={handleKeyDown}
       placeholder={`Message @${roomStore.selectedRoom?.name}`}
       action={{
-        icon: { name: "envelope", size: "large" },
+        icon: { name: "paper plane outline", size: "large", id: "sendIcon" },
         onClick: () => handleSend(),
       }}
     />

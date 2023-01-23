@@ -65,6 +65,11 @@ const SelectedRoom: React.FC = () => {
     const lastMessage = antiReverseContainer?.children[
       antiReverseContainer.childElementCount - 1
     ] as HTMLElement;
+    if (
+      lastMessage === undefined ||
+      lastMessage.classList.contains("defaultMessage")
+    )
+      return;
     if (lastMessage.dataset.author === userStore.user?.id) {
       scrollBottom();
     } else if (messagesContainer?.scrollTop! < 0 && !isPopUp) {

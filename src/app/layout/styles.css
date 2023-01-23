@@ -20,6 +20,12 @@ code {
   position: absolute;
   top: 0;
 }
+#navMenu > .item.menuItem.active {
+  color: #9c248a !important;
+}
+#navMenu > .item.menuItem:hover {
+  color: white;
+}
 .mainSection {
   margin-left: 15%;
 }
