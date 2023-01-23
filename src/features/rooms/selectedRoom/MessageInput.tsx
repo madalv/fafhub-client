@@ -1,44 +1,37 @@
-import { Input } from "semantic-ui-react";
+import {Icon, Input, Message} from "semantic-ui-react";
 import React from "react";
-import { store, useStore } from "../../../app/stores/store";
+import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
+import {handleKeyDown, handleSend, MSG_SPAM_TIMEOUT} from "./messageInputLogic";
 
-const handleSend = () => {
-  let ws = store.wsStore.ws;
-  const input = document.getElementById("message") as HTMLInputElement;
-  if (input.value != null && input.value !== "") {
-    ws!!.send(
-      JSON.stringify({
-        text: input.value,
-        command: "CreateMessage",
-        targetId: store.roomStore.selectedRoom?.id,
-        roomId: store.roomStore.selectedRoom?.id,
-      })
-    );
-    input.value = "";
-  }
-};
 
-const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-  if (event.key === "Enter") {
-    handleSend();
-  }
-};
 
 const MessageInput: React.FC = () => {
   const { roomStore } = useStore();
 
   return (
-    <Input
-      inverted
-      id="message"
-      onKeyDown={handleKeyDown}
-      placeholder={`Message @${roomStore.selectedRoom?.name}`}
-      action={{
-        icon: { name: "paper plane outline", size: "large", id: "sendIcon" },
-        onClick: () => handleSend(),
-      }}
-    />
+      <>
+          <Message
+              negative
+              hidden={roomStore.canSendMsg}
+              >
+              <Icon name='circle notched' loading />
+              <Message.Header style={{"backgroundColor": "inherit"}}>
+                  {`You've been sending too many messages. Try again in ${MSG_SPAM_TIMEOUT / 1000} sec.`}
+              </Message.Header>
+          </Message>
+          <Input
+              inverted
+              id="message"
+              onKeyDown={handleKeyDown}
+              placeholder={`Message @${roomStore.selectedRoom?.name}`}
+              action={{
+                  icon: { name: "paper plane outline", size: "large", id: "sendIcon" },
+                  onClick: () => handleSend(),
+              }}
+          />
+      </>
+
   );
 };
 

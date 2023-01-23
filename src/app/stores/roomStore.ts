@@ -7,6 +7,16 @@ import { User } from "../models/User";
 
 // TODO persist selected room id
 
+const booleanify = (value: string | null): boolean => {
+  const truthy: string[] = [
+    'true',
+    'True',
+    '1'
+  ]
+
+  return value ? truthy.includes(value) : false
+}
+
 export default class RoomStore {
   rooms: Room[] = [];
   selectedRoom: Room | null = null;
@@ -15,6 +25,8 @@ export default class RoomStore {
   selectedRoomId: string | null = window.localStorage.getItem("selroomid");
   generalRoomId: string = "general";
   announcementsRoomId: string = "announcements";
+  msgCounter: number = 0
+  canSendMsg: boolean = window.localStorage.getItem("canSendMsg") ? booleanify(window.localStorage.getItem("canSendMsg")) : true
 
   constructor() {
     makeAutoObservable(this);
@@ -26,6 +38,20 @@ export default class RoomStore {
         else window.localStorage.removeItem("selroomid");
       }
     );
+  }
+
+
+  setCanSendMsg = (b: boolean) => {
+    window.localStorage.setItem("canSendMsg", String(b))
+    this.canSendMsg = b
+  }
+
+  incMsgCounter = () => {
+    this.msgCounter += 1
+  }
+
+  resetMsgCounter = () => {
+    this.msgCounter = 0
   }
 
   setNotifs = (id: string) => {
@@ -69,11 +95,8 @@ export default class RoomStore {
         break;
     }
     this.setSelectedRoomId(roomId);
-    console.log(this.selectedRoom!!.name);
     this.loadMessagesForRoom(this.selectedRoom!!).then();
-    this.loadUsersForRoom(this.selectedRoom!!).then(() =>
-      console.log(this.selectedRoom!!.name)
-    );
+    this.loadUsersForRoom(this.selectedRoom!!).then();
   };
 
   loadUsersForRoom = async (room: Room) => {

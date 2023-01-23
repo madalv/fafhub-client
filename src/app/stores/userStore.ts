@@ -32,7 +32,6 @@ export default class UserStore {
 
   login = async (creds: UserFormValues) => {
     try {
-      console.log(creds);
       const token = await agent.Account.login(creds);
       store.commonStore.setToken(token.token);
       // store.roomStore.setSelectedRoom(store.roomStore.generalRoomId)

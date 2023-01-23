@@ -22,7 +22,6 @@ const SelectedRoom: React.FC = () => {
   useEffect(() => {
     wsStore.ws!!.onmessage = (event) => {
       let msg = JSON.parse(event.data);
-      console.log(msg);
 
       // todo room.messages is undefined
       switch (msg.command) {
