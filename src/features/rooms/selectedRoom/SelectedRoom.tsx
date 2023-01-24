@@ -1,13 +1,12 @@
 import React, { Component, useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
-import {store, useStore} from "../../../app/stores/store";
+import { store, useStore } from "../../../app/stores/store";
 import "./styles.css";
 import { Button, Icon, Image, Popup, PopupProps } from "semantic-ui-react";
 import { useRef } from "react";
 import RoomRenameForm from "../roomRenameForm/RoomRenameForm";
 import AddUserPopup from "./AddUserPopup";
 import EditMessage from "./EditMessage";
-
 
 const SelectedRoom: React.FC = () => {
   const [canClose, setCanClose] = useState(false);
@@ -28,11 +27,15 @@ const SelectedRoom: React.FC = () => {
 =======
   const initialPopup = useRef<Component<PopupProps> | any>();
 <<<<<<< HEAD:src/features/rooms/selectedRoom/SelectedRoom.tsx
+<<<<<<< HEAD:src/features/rooms/selectedRoom/SelectedRoom.tsx
 >>>>>>> eb36502 (Beauty):faf-hub-client/src/features/rooms/selectedRoom/SelectedRoom.tsx
   const { roomStore, wsStore, userStore } = useStore();
 =======
   const { roomStore, wsStore, userStore, modalStore} = useStore();
 >>>>>>> 3ab8317 (functionality for 3 dots stuff):faf-hub-client/src/features/rooms/selectedRoom/SelectedRoom.tsx
+=======
+  const { roomStore, wsStore, userStore, modalStore } = useStore();
+>>>>>>> 1a9f62b (mini fix):faf-hub-client/src/features/rooms/selectedRoom/SelectedRoom.tsx
   const [isPopUp, setPopUp] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
 
@@ -43,18 +46,23 @@ const SelectedRoom: React.FC = () => {
       switch (msg.command) {
         case "CreateMessage": {
 <<<<<<< HEAD:src/features/rooms/selectedRoom/SelectedRoom.tsx
+<<<<<<< HEAD:src/features/rooms/selectedRoom/SelectedRoom.tsx
           if (msg.roomId !== roomStore.selectedRoom?.id) roomStore.setNotifs(msg.roomId)
 =======
           if (msg.roomId != roomStore.selectedRoom?.id)
+=======
+          if (msg.roomId !== roomStore.selectedRoom?.id)
+>>>>>>> 1a9f62b (mini fix):faf-hub-client/src/features/rooms/selectedRoom/SelectedRoom.tsx
             roomStore.setNotifs(msg.roomId);
 >>>>>>> eb36502 (Beauty):faf-hub-client/src/features/rooms/selectedRoom/SelectedRoom.tsx
           else roomStore.addNewMessageToRoom(msg.roomId, msg);
           break;
         }
         case "DeleteMessage":
-          roomStore.deleteMessageFromSelectedRoom(msg.targetId)
+          roomStore.deleteMessageFromSelectedRoom(msg.targetId);
           break;
         case "UpdateMessage":
+<<<<<<< HEAD:src/features/rooms/selectedRoom/SelectedRoom.tsx
           roomStore.editMessageFromSelectedRoom(msg.targetId, msg.text)
           break;
         case "AddUser":
@@ -69,29 +77,41 @@ const SelectedRoom: React.FC = () => {
           });
 
 >>>>>>> eb36502 (Beauty):faf-hub-client/src/features/rooms/selectedRoom/SelectedRoom.tsx
+=======
+          roomStore.editMessageFromSelectedRoom(msg.targetId, msg.text);
+>>>>>>> 1a9f62b (mini fix):faf-hub-client/src/features/rooms/selectedRoom/SelectedRoom.tsx
           break;
         case "DeleteRoom":
           roomStore.loadRooms().then(() => {
             store.roomStore.setSelectedRoom(roomStore.rooms[0].id);
           });
           break;
-        case "RemoveUser": {
-          if (msg.targetId === userStore.user?.id) roomStore.loadRooms().then(() => {
-            store.roomStore.setSelectedRoom(roomStore.rooms[0].id);
-          });
-          else {
-            roomStore.setSelectedRoom(roomStore.selectedRoom!.id)
+        case "RemoveUser":
+          {
+            if (msg.targetId === userStore.user?.id)
+              roomStore.loadRooms().then(() => {
+                store.roomStore.setSelectedRoom(roomStore.rooms[0].id);
+              });
+            else {
+              roomStore.setSelectedRoom(roomStore.selectedRoom!.id);
+            }
           }
-        }
-        break;
+          break;
+        case "AddUser":
         case "CreateRoom":
         case "UpdateRoom":
           roomStore.loadRooms().then(() => {
-            roomStore
-              .setSelectedRoom(msg.roomId)
-              .then(() =>
-                roomStore.addNewMessageToRoom(roomStore.selectedRoom!!.id, msg)
-              );
+            if (msg.roomId !== roomStore.selectedRoom?.id)
+              roomStore.setNotifs(msg.roomId);
+            else
+              roomStore
+                .setSelectedRoom(msg.roomId)
+                .then(() =>
+                  roomStore.addNewMessageToRoom(
+                    roomStore.selectedRoom!!.id,
+                    msg
+                  )
+                );
           });
           break;
       }
@@ -139,18 +159,38 @@ const SelectedRoom: React.FC = () => {
                 position="bottom right"
               >
                 <ul className="toolBar__options">
-                  {roomStore.selectedRoom?.ownerId === userStore.user?.id ?
-                    (<>
-                      <li onClick={() => modalStore.openModal(<AddUserPopup/>)}>
-                        Add User</li>
-                      <li onClick={() => modalStore.openModal(<RoomRenameForm/>)}>
-                        Rename</li>
-                      <li onClick={() => roomStore.delete(roomStore.selectedRoom!!.id)}>
-                        Delete </li>
-                    </>) :
-                      <li onClick={() => roomStore.removeUser(roomStore.selectedRoom!.id, userStore.user!.id)}>
-                        Leave</li>
-                  }
+                  {roomStore.selectedRoom?.ownerId === userStore.user?.id ? (
+                    <>
+                      <li
+                        onClick={() => modalStore.openModal(<AddUserPopup />)}
+                      >
+                        Add User
+                      </li>
+                      <li
+                        onClick={() => modalStore.openModal(<RoomRenameForm />)}
+                      >
+                        Rename
+                      </li>
+                      <li
+                        onClick={() =>
+                          roomStore.delete(roomStore.selectedRoom!!.id)
+                        }
+                      >
+                        Delete{" "}
+                      </li>
+                    </>
+                  ) : (
+                    <li
+                      onClick={() =>
+                        roomStore.removeUser(
+                          roomStore.selectedRoom!.id,
+                          userStore.user!.id
+                        )
+                      }
+                    >
+                      Leave
+                    </li>
+                  )}
                 </ul>
               </Popup>
             </div>
@@ -241,24 +281,35 @@ const SelectedRoom: React.FC = () => {
                                 </b>
                               </div>
                               <div className="messageTimeWrapper">
-                                {message.userId === userStore.user!.id
-                                    && message.command !== "DeleteMessage" ? (
-                                    <div className="actionIcons__container" >
-                                      <Icon link onClick={() => store.modalStore.openModal(<EditMessage
-                                          msgId={message.id}
-                                          oldText={message.text}/>)}
-                                        className="messageAction__icon"
-                                        size="small"
-                                        id="editIcon"
-                                        name="edit outline"
-                                      />
-                                      <Icon link onClick={() => handleDeleteMessage(message.id)}
-                                        className="messageAction__icon"
-                                        size="small"
-                                        id="deleteIcon"
-                                        name="delete"
-                                      />
-                                    </div>
+                                {message.userId === userStore.user!.id &&
+                                message.command !== "DeleteMessage" ? (
+                                  <div className="actionIcons__container">
+                                    <Icon
+                                      link
+                                      onClick={() =>
+                                        store.modalStore.openModal(
+                                          <EditMessage
+                                            msgId={message.id}
+                                            oldText={message.text}
+                                          />
+                                        )
+                                      }
+                                      className="messageAction__icon"
+                                      size="small"
+                                      id="editIcon"
+                                      name="edit outline"
+                                    />
+                                    <Icon
+                                      link
+                                      onClick={() =>
+                                        handleDeleteMessage(message.id)
+                                      }
+                                      className="messageAction__icon"
+                                      size="small"
+                                      id="deleteIcon"
+                                      name="delete"
+                                    />
+                                  </div>
                                 ) : null}
 
                                 <div
@@ -268,8 +319,14 @@ const SelectedRoom: React.FC = () => {
                                       : ""
                                   }`}
                                 >
-                                  {message.command === "DeleteMessage" ? <i>Message deleted</i> : message.text}
-                                  {message.command === "UpdateMessage" ? <i> {` (edited)`}</i> : null}
+                                  {message.command === "DeleteMessage" ? (
+                                    <i>Message deleted</i>
+                                  ) : (
+                                    message.text
+                                  )}
+                                  {message.command === "UpdateMessage" ? (
+                                    <i> {` (edited)`}</i>
+                                  ) : null}
                                 </div>
                                 <div className="time">
                                   {date.toLocaleString("en-US", {
@@ -309,13 +366,13 @@ const SelectedRoom: React.FC = () => {
 const handleDeleteMessage = (msgId: string) => {
   let ws = store.wsStore.ws;
   ws!!.send(
-      JSON.stringify({
-        text: "anything",
-        command: "DeleteMessage",
-        targetId: msgId,
-        roomId: store.roomStore.selectedRoom?.id,
-      })
+    JSON.stringify({
+      text: "anything",
+      command: "DeleteMessage",
+      targetId: msgId,
+      roomId: store.roomStore.selectedRoom?.id,
+    })
   );
-}
+};
 
 export default observer(SelectedRoom);

@@ -36,7 +36,7 @@ const App: React.FC = () => {
       <Routes>
         <Route element={<PrivateRoutes />}>
           <Route path="/rooms" element={<Rooms />} />
-          <Route path="/main" element={<AnnouncementsRoom />} />
+          <Route path="/news" element={<AnnouncementsRoom />} />
           <Route path="/community" element={<GeneralRoom />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />

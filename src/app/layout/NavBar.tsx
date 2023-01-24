@@ -17,12 +17,12 @@ const NavBar: React.FC = () => {
             <Menu text vertical inverted fluid id="navMenu">
               <Menu.Item
                 as={NavLink}
-                to="/main"
+                to="/news"
                 className="menuItem"
-                name="main"
+                name="News"
               >
                 {<Icon className="navIcon" name="bell outline" />}
-                Main
+                News
               </Menu.Item>
               <Menu.Item
                 as={NavLink}
