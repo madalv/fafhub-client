@@ -17,7 +17,7 @@ export default observer(function Rooms() {
   useEffect(() => {
     middleSection.current?.setAttribute(
       "style",
-      `min-height:${window.innerHeight * 0.85}px`
+      `height:${window.innerHeight * 0.85}px`
     );
   }, [middleSection.current?.clientHeight]);
   const { modalStore } = useStore();

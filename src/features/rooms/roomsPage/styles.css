@@ -81,7 +81,6 @@
 
 .roomMiddle {
   flex: 2;
-  gap: 1em;
   position: relative;
   display: flex;
   justify-content: space-between;

@@ -15,7 +15,7 @@ const AnnouncementsRoom: React.FC = () => {
   useEffect(() => {
     middleSection.current?.setAttribute(
       "style",
-      `min-height:${window.innerHeight * 0.8}px`
+      `height:${window.innerHeight * 0.8}px`
     );
   }, [middleSection.current?.clientHeight]);
   useEffect(() => {
