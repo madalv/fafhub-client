@@ -27,7 +27,9 @@ const UserList: React.FC = () => {
                   {user.firstName} {user.lastName} ({user.email})
                 </span>
               </div>
-              {user.id !== userStore.user!.id ? (
+              {user.id !== userStore.user!.id
+              && roomStore.selectedRoom!.id !== roomStore.generalRoomId
+              && roomStore.selectedRoom!.id !== roomStore.announcementsRoomId ? (
                   <div className="menuItemWrapper">
                     <Button
                         floated="right"
