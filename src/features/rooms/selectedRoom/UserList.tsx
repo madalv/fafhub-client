@@ -22,14 +22,17 @@ const UserList: React.FC = () => {
           .map((user) => (
             <Menu.Item key={user.id} as={NavLink} className="menuItem">
               <div className="menuItemTextWrapper">
-                {user.isOnline ? <Icon name="circle" color="green" /> : <></>}
+                {user.isOnline ? <Icon name="circle" color="yellow" size="small" /> : <></>}
+                {roomStore.selectedRoom!.ownerId === user.id ?
+                    (<Icon name="chess queen" color="yellow" />) : null}
                 <span>
                   {user.firstName} {user.lastName} ({user.email})
                 </span>
               </div>
               {user.id !== userStore.user!.id
               && roomStore.selectedRoom!.id !== roomStore.generalRoomId
-              && roomStore.selectedRoom!.id !== roomStore.announcementsRoomId ? (
+              && roomStore.selectedRoom!.id !== roomStore.announcementsRoomId
+              && roomStore.selectedRoom!.ownerId === userStore.user!.id ? (
                   <div className="menuItemWrapper">
                     <Button
                         floated="right"
