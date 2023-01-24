@@ -62,8 +62,12 @@ const SelectedRoom: React.FC = () => {
           if (msg.roomId !== roomStore.selectedRoom?.id)
 >>>>>>> 1a9f62b (mini fix):faf-hub-client/src/features/rooms/selectedRoom/SelectedRoom.tsx
             roomStore.setNotifs(msg.roomId);
+<<<<<<< HEAD:src/features/rooms/selectedRoom/SelectedRoom.tsx
 >>>>>>> eb36502 (Beauty):faf-hub-client/src/features/rooms/selectedRoom/SelectedRoom.tsx
           else roomStore.addNewMessageToRoom(msg.roomId, msg);
+=======
+          else roomStore.addMessageToSelectedRoom(msg)
+>>>>>>> 5d2a175 (legendary bug fix??):faf-hub-client/src/features/rooms/selectedRoom/SelectedRoom.tsx
           break;
         }
         case "DeleteMessage":

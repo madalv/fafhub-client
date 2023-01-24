@@ -159,6 +159,13 @@ export default class RoomStore {
     this.setMessages(room!!, [message, ...room!!.messages]);
   };
 
+  addMessageToSelectedRoom = (message: Message) => {
+    if (this.selectedRoom === null) this.setSelectedRoom(this.selectedRoomId!).then(() => {
+      this.setMessages(this.selectedRoom!, [message, ...this.selectedRoom!.messages]);
+    })
+    else this.setMessages(this.selectedRoom!, [message, ...this.selectedRoom!.messages]);
+  }
+
   setMessages = (room: Room, messages: Message[]) => {
     room!!.messages = messages;
   };
