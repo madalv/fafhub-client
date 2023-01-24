@@ -39,7 +39,7 @@ const LoginFormOTP: React.FC = () => {
           <Field
             id="email"
             name="email"
-            placeholder="john@smith.com"
+            placeholder="mr.bostan@isa.utm.md"
             type="email"
           />
 

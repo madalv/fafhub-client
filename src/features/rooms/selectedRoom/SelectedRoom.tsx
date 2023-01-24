@@ -1,10 +1,12 @@
 import React, { Component, useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
-import { useStore } from "../../../app/stores/store";
+import {store, useStore} from "../../../app/stores/store";
 import "./styles.css";
-import AddUserPopup from "./AddUserPopup";
 import { Button, Icon, Image, Popup, PopupProps } from "semantic-ui-react";
 import { useRef } from "react";
+import RoomRenameForm from "../roomRenameForm/RoomRenameForm";
+import AddUserPopup from "./AddUserPopup";
+
 
 const SelectedRoom: React.FC = () => {
   const [canClose, setCanClose] = useState(false);
@@ -24,8 +26,12 @@ const SelectedRoom: React.FC = () => {
 
 =======
   const initialPopup = useRef<Component<PopupProps> | any>();
+<<<<<<< HEAD:src/features/rooms/selectedRoom/SelectedRoom.tsx
 >>>>>>> eb36502 (Beauty):faf-hub-client/src/features/rooms/selectedRoom/SelectedRoom.tsx
   const { roomStore, wsStore, userStore } = useStore();
+=======
+  const { roomStore, wsStore, userStore, modalStore} = useStore();
+>>>>>>> 3ab8317 (functionality for 3 dots stuff):faf-hub-client/src/features/rooms/selectedRoom/SelectedRoom.tsx
   const [isPopUp, setPopUp] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
 
@@ -59,11 +65,21 @@ const SelectedRoom: React.FC = () => {
 >>>>>>> eb36502 (Beauty):faf-hub-client/src/features/rooms/selectedRoom/SelectedRoom.tsx
           break;
         case "DeleteRoom":
-          roomStore.loadRooms().then();
+          roomStore.loadRooms().then(() => {
+            store.roomStore.setSelectedRoom(roomStore.rooms[0].id);
+          });
           break;
-        case "RemoveUser":
-          break;
+        case "RemoveUser": {
+          if (msg.targetId === userStore.user?.id) roomStore.loadRooms().then(() => {
+            store.roomStore.setSelectedRoom(roomStore.rooms[0].id);
+          });
+          else {
+            roomStore.setSelectedRoom(roomStore.selectedRoom!.id)
+          }
+        }
+        break;
         case "CreateRoom":
+        case "UpdateRoom":
           roomStore.loadRooms().then(() => {
             roomStore
               .setSelectedRoom(msg.roomId)
@@ -117,33 +133,34 @@ const SelectedRoom: React.FC = () => {
                 position="bottom right"
               >
                 <ul className="toolBar__options">
-                  <Popup
-                    id="innerPopup"
-                    trigger={<li>Add User</li>}
-                    closeOnDocumentClick={true}
-                    on="click"
-                    basic
-                    onClose={handleClose}
-                    positionFixed
-                    onOpen={() => setCanClose(false)}
-                  >
-                    <AddUserPopup />
-                  </Popup>
-
-                  <li>Rename</li>
-                  <li>Leave</li>
-                  <li>Delete</li>
+                  {roomStore.selectedRoom?.ownerId === userStore.user?.id ?
+                    (<>
+                        {/*<Popup*/}
+                        {/*id="innerPopup"*/}
+                        {/*trigger={<li>Add User</li>}*/}
+                        {/*closeOnDocumentClick={true}*/}
+                        {/*content={<AddUserPopup />}*/}
+                        {/*on="click"*/}
+                        {/*basic*/}
+                        {/*onClose={handleClose}*/}
+                        {/*positionFixed*/}
+                        {/*onOpen={() => setCanClose(false)}*/}
+                        {/*/>*/}
+                      <li onClick={() => modalStore.openModal(<AddUserPopup/>)}>
+                        Add User</li>
+                      <li onClick={() => modalStore.openModal(<RoomRenameForm/>)}>
+                        Rename</li>
+                      <li onClick={() => roomStore.delete(roomStore.selectedRoom!!.id)}>
+                        Delete </li>
+                    </>) :
+                      <li onClick={() => roomStore.removeUser(roomStore.selectedRoom!.id, userStore.user!.id)}>
+                        Leave</li>
+                  }
                 </ul>
               </Popup>
             </div>
           )}
         </div>
-
-        {/* {roomStore.selectedRoom?.ownerId === userStore.user?.id ? (
-          <AddUserPopup />
-        ) : (
-          <></>
-        )} */}
       </div>
 
       <div className="messageList">
@@ -286,5 +303,6 @@ const SelectedRoom: React.FC = () => {
     </>
   );
 };
+
 
 export default observer(SelectedRoom);

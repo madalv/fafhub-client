@@ -1,5 +1,5 @@
 import { useStore } from "../../../app/stores/store";
-import { Icon, Menu } from "semantic-ui-react";
+import {Button, Icon, Menu} from "semantic-ui-react";
 import { NavLink } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import React from "react";
@@ -27,10 +27,24 @@ const UserList: React.FC = () => {
                   {user.firstName} {user.lastName} ({user.email})
                 </span>
               </div>
-              {/*<Button inverted animated='fade' className='delete'>*/}
-              {/*    <Button.Content visible> <Icon name="trash" /> </Button.Content>*/}
-              {/*    <Button.Content hidden>Remove</Button.Content>*/}
-              {/*</Button>*/}
+              {user.id !== userStore.user!.id ? (
+                  <div className="menuItemWrapper">
+                    <Button
+                        floated="right"
+                        inverted
+                        size="mini"
+                        animated="fade"
+                        className="deleteButton"
+                        onClick={() => roomStore.removeUser(roomStore.selectedRoom!.id, user.id)}
+                    >
+                      <Button.Content visible>
+                        <Icon name="trash" />
+                      </Button.Content>
+                      <Button.Content hidden>Delete</Button.Content>
+                    </Button>
+                  </div>
+              ) : null}
+
             </Menu.Item>
           ))
       ) : (

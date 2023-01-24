@@ -176,11 +176,26 @@ export default class RoomStore {
         })
       );
       store.modalStore.closeModal();
-      await this.loadRooms();
     } catch (error) {
       throw error;
     }
   };
+
+  update = async (roomName: string, roomId: string) => {
+    try {
+      store.wsStore.ws?.send(
+          JSON.stringify({
+            text: roomName,
+            command: "UpdateRoom",
+            targetId: roomId,
+            roomId: roomId
+          })
+      )
+      store.modalStore.closeModal();
+    } catch (error) {
+      throw error;
+    }
+  }
 
   delete = async (roomId: string) => {
     try {
@@ -192,11 +207,23 @@ export default class RoomStore {
           roomId: roomId,
         })
       );
-      await this.loadRooms().then(() => {
-        store.roomStore.setSelectedRoom(this.rooms[0].id);
-      });
     } catch (error) {
       throw error;
     }
   };
+
+  removeUser = async (roomId: string, userId: string) => {
+    try {
+      store.wsStore.ws?.send(
+          JSON.stringify({
+            text: "anything",
+            command: "RemoveUser",
+            targetId: userId,
+            roomId: roomId
+      }))
+    } catch (error) {
+      throw error;
+    }
+  }
+
 }

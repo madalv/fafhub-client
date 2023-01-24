@@ -38,7 +38,7 @@ const SendOTPForm: React.FC<JSX.Element> = ({ props }) => {
           <Field
               id="email"
               name="email"
-              placeholder="john@smith.com"
+              placeholder="mr.bostan@isa.utm.md"
               type="email"
           />
 
