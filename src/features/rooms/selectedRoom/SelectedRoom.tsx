@@ -6,6 +6,7 @@ import { Button, Icon, Image, Popup, PopupProps } from "semantic-ui-react";
 import { useRef } from "react";
 import RoomRenameForm from "../roomRenameForm/RoomRenameForm";
 import AddUserPopup from "./AddUserPopup";
+import EditMessage from "./EditMessage";
 
 
 const SelectedRoom: React.FC = () => {
@@ -39,7 +40,6 @@ const SelectedRoom: React.FC = () => {
     wsStore.ws!!.onmessage = (event) => {
       let msg = JSON.parse(event.data);
 
-      // todo room.messages is undefined
       switch (msg.command) {
         case "CreateMessage": {
 <<<<<<< HEAD:src/features/rooms/selectedRoom/SelectedRoom.tsx
@@ -51,6 +51,12 @@ const SelectedRoom: React.FC = () => {
           else roomStore.addNewMessageToRoom(msg.roomId, msg);
           break;
         }
+        case "DeleteMessage":
+          roomStore.deleteMessageFromSelectedRoom(msg.targetId)
+          break;
+        case "UpdateMessage":
+          roomStore.editMessageFromSelectedRoom(msg.targetId, msg.text)
+          break;
         case "AddUser":
 <<<<<<< HEAD:src/features/rooms/selectedRoom/SelectedRoom.tsx
           roomStore.loadRooms().then()
@@ -135,17 +141,6 @@ const SelectedRoom: React.FC = () => {
                 <ul className="toolBar__options">
                   {roomStore.selectedRoom?.ownerId === userStore.user?.id ?
                     (<>
-                        {/*<Popup*/}
-                        {/*id="innerPopup"*/}
-                        {/*trigger={<li>Add User</li>}*/}
-                        {/*closeOnDocumentClick={true}*/}
-                        {/*content={<AddUserPopup />}*/}
-                        {/*on="click"*/}
-                        {/*basic*/}
-                        {/*onClose={handleClose}*/}
-                        {/*positionFixed*/}
-                        {/*onOpen={() => setCanClose(false)}*/}
-                        {/*/>*/}
                       <li onClick={() => modalStore.openModal(<AddUserPopup/>)}>
                         Add User</li>
                       <li onClick={() => modalStore.openModal(<RoomRenameForm/>)}>
@@ -246,20 +241,26 @@ const SelectedRoom: React.FC = () => {
                                 </b>
                               </div>
                               <div className="messageTimeWrapper">
-                                <div className="actionIcons__container">
-                                  <Icon
-                                    className="messageAction__icon"
-                                    size="small"
-                                    id="editIcon"
-                                    name="edit outline"
-                                  />
-                                  <Icon
-                                    className="messageAction__icon"
-                                    size="small"
-                                    id="deleteIcon"
-                                    name="delete"
-                                  />
-                                </div>
+                                {message.userId === userStore.user!.id
+                                    && message.command !== "DeleteMessage" ? (
+                                    <div className="actionIcons__container" >
+                                      <Icon link onClick={() => store.modalStore.openModal(<EditMessage
+                                          msgId={message.id}
+                                          oldText={message.text}/>)}
+                                        className="messageAction__icon"
+                                        size="small"
+                                        id="editIcon"
+                                        name="edit outline"
+                                      />
+                                      <Icon link onClick={() => handleDeleteMessage(message.id)}
+                                        className="messageAction__icon"
+                                        size="small"
+                                        id="deleteIcon"
+                                        name="delete"
+                                      />
+                                    </div>
+                                ) : null}
+
                                 <div
                                   className={`messageTextWrapper ${
                                     user?.id === userStore.user?.id
@@ -267,7 +268,8 @@ const SelectedRoom: React.FC = () => {
                                       : ""
                                   }`}
                                 >
-                                  {message.text}
+                                  {message.command === "DeleteMessage" ? <i>Message deleted</i> : message.text}
+                                  {message.command === "UpdateMessage" ? <i> {` (edited)`}</i> : null}
                                 </div>
                                 <div className="time">
                                   {date.toLocaleString("en-US", {
@@ -304,5 +306,16 @@ const SelectedRoom: React.FC = () => {
   );
 };
 
+const handleDeleteMessage = (msgId: string) => {
+  let ws = store.wsStore.ws;
+  ws!!.send(
+      JSON.stringify({
+        text: "anything",
+        command: "DeleteMessage",
+        targetId: msgId,
+        roomId: store.roomStore.selectedRoom?.id,
+      })
+  );
+}
 
 export default observer(SelectedRoom);

@@ -11,7 +11,7 @@ const MessageInput: React.FC = () => {
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
         if (event.key === "Enter") {
-            handleSend();
+            handleSend("CreateMessage", "message");
             setCount(0)
         }
     };
@@ -52,7 +52,7 @@ const MessageInput: React.FC = () => {
                       icon: { name: "paper plane outline", size: "large", id: "sendIcon"},
                       onClick: () => {
                           setCount(0)
-                          handleSend()
+                          handleSend("CreateMessage", "message")
                       },
                   }}
               />

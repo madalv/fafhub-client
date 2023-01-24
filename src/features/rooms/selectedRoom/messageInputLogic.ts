@@ -23,10 +23,10 @@ export const checkLimit = () => {
     store.roomStore.resetMsgCounter()
 }
 
-export const handleSend = () => {
+export const handleSend = (command: string, inputId: string, msgId?: string) => {
     let ws = store.wsStore.ws;
 
-    const input = document.getElementById("message") as HTMLInputElement;
+    const input = document.getElementById(inputId) as HTMLInputElement;
     if (store.roomStore.canSendMsg
         && input.value != null
         && input.value !== ""
@@ -34,8 +34,8 @@ export const handleSend = () => {
         ws!!.send(
             JSON.stringify({
                 text: input.value,
-                command: "CreateMessage",
-                targetId: store.roomStore.selectedRoom?.id,
+                command: command,
+                targetId: msgId ? msgId : store.roomStore.selectedRoom?.id,
                 roomId: store.roomStore.selectedRoom?.id,
             })
         );

@@ -129,6 +129,18 @@ export default class RoomStore {
     }
   };
 
+  deleteMessageFromSelectedRoom = (msgId: string) => {
+    let msgIndex = this.selectedRoom!.messages.findIndex(m => m.id === msgId)
+    this.selectedRoom!.messages[msgIndex].text = "Message deleted"
+    this.selectedRoom!.messages[msgIndex].command = "DeleteMessage"
+  }
+
+  editMessageFromSelectedRoom = (msgId: string, text: string) => {
+    let msgIndex = this.selectedRoom!.messages.findIndex(m => m.id === msgId)
+    this.selectedRoom!.messages[msgIndex].text = text
+    this.selectedRoom!.messages[msgIndex].command = "UpdateMessage"
+  }
+
   addNewMessageToRoom = (roomId: string, message: Message) => {
     let room: Room | null;
     switch (roomId) {
