@@ -147,9 +147,9 @@
   padding: 0;
 }
 .ui.inverted.action.input {
-  width: 93%;
+  width: 94%;
   border-color: #301c4bd9;
-  margin: 0.5em auto;
+  margin: 0 auto;
   border-radius: 7px;
   border-style: solid;
   border-width: 0.005vw;
