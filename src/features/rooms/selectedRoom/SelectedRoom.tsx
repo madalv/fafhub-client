@@ -195,7 +195,27 @@ const SelectedRoom: React.FC = () => {
                         // src="/assets/user_placeholder.png"
                         src={userStore.getUserInfo(message.userId!)?.avatarUri}
                       />
-                      <div className="message__hero">
+                      <div
+                        className="message__hero"
+                        onMouseOver={(e) => {
+                          [
+                            ...e.currentTarget.querySelectorAll<HTMLElement>(
+                              ".messageAction__icon"
+                            ),
+                          ].map((m) => {
+                            m.setAttribute("style", "display:inline-block");
+                          });
+                        }}
+                        onMouseOut={(e) => {
+                          [
+                            ...e.currentTarget.querySelectorAll<HTMLElement>(
+                              ".messageAction__icon"
+                            ),
+                          ].map((m) => {
+                            m.setAttribute("style", "display:none");
+                          });
+                        }}
+                      >
                         {(() => {
                           let user = userStore.getUserInfo(message.userId!!);
                           let date = new Date(message.createdAt);
@@ -209,6 +229,20 @@ const SelectedRoom: React.FC = () => {
                                 </b>
                               </div>
                               <div className="messageTimeWrapper">
+                                <div className="actionIcons__container">
+                                  <Icon
+                                    className="messageAction__icon"
+                                    size="small"
+                                    id="editIcon"
+                                    name="edit outline"
+                                  />
+                                  <Icon
+                                    className="messageAction__icon"
+                                    size="small"
+                                    id="deleteIcon"
+                                    name="delete"
+                                  />
+                                </div>
                                 <div
                                   className={`messageTextWrapper ${
                                     user?.id === userStore.user?.id

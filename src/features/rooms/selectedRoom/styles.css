@@ -40,6 +40,17 @@
   right: 0;
   cursor: pointer;
 }
+.actionIcons__container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.2em;
+}
+#editIcon,
+#deleteIcon {
+  display: none;
+  color: #782493;
+}
+
 #ellipsisPopup {
   background-color: #181830;
   color: white;
