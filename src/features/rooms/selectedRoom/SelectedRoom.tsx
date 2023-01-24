@@ -40,6 +40,14 @@ const SelectedRoom: React.FC = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
 
   useEffect(() => {
+    if (roomStore.selectedRoom === null) {
+      roomStore.loadRooms().then(() =>{
+        roomStore.setSelectedRoom(roomStore.selectedRoomId!).then()
+      })
+    }
+  }, [roomStore.selectedRoom])
+
+  useEffect(() => {
     wsStore.ws!!.onmessage = (event) => {
       let msg = JSON.parse(event.data);
 
