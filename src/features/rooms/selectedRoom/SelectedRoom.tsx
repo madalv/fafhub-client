@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { Component, useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../app/stores/store";
 import "./styles.css";
 import AddUserPopup from "./AddUserPopup";
-import { Button, Image } from "semantic-ui-react";
+import { Button, Icon, Image, Popup, PopupProps } from "semantic-ui-react";
+import { useRef } from "react";
 
 const SelectedRoom: React.FC = () => {
+  const [canClose, setCanClose] = useState(false);
+  const handleClose = () => {
+    setCanClose(true);
+  };
   const scrollBottom = () => {
     const messagesContainer = document.querySelector("#messagesContainer");
     messagesContainer?.scrollTo({
@@ -15,7 +20,11 @@ const SelectedRoom: React.FC = () => {
     });
     setPopUp(false);
   };
+<<<<<<< HEAD:src/features/rooms/selectedRoom/SelectedRoom.tsx
 
+=======
+  const initialPopup = useRef<Component<PopupProps> | any>();
+>>>>>>> eb36502 (Beauty):faf-hub-client/src/features/rooms/selectedRoom/SelectedRoom.tsx
   const { roomStore, wsStore, userStore } = useStore();
   const [isPopUp, setPopUp] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -27,12 +36,27 @@ const SelectedRoom: React.FC = () => {
       // todo room.messages is undefined
       switch (msg.command) {
         case "CreateMessage": {
+<<<<<<< HEAD:src/features/rooms/selectedRoom/SelectedRoom.tsx
           if (msg.roomId !== roomStore.selectedRoom?.id) roomStore.setNotifs(msg.roomId)
+=======
+          if (msg.roomId != roomStore.selectedRoom?.id)
+            roomStore.setNotifs(msg.roomId);
+>>>>>>> eb36502 (Beauty):faf-hub-client/src/features/rooms/selectedRoom/SelectedRoom.tsx
           else roomStore.addNewMessageToRoom(msg.roomId, msg);
           break;
         }
         case "AddUser":
+<<<<<<< HEAD:src/features/rooms/selectedRoom/SelectedRoom.tsx
           roomStore.loadRooms().then()
+=======
+          roomStore.loadRooms().then(() => {
+            roomStore.setSelectedRoom(msg.roomId).then(() => {
+              roomStore.loadUsersForRoom(roomStore.selectedRoom!!).then();
+              roomStore.addNewMessageToRoom(roomStore.selectedRoom!!.id, msg);
+            });
+          });
+
+>>>>>>> eb36502 (Beauty):faf-hub-client/src/features/rooms/selectedRoom/SelectedRoom.tsx
           break;
         case "DeleteRoom":
           roomStore.loadRooms().then();
@@ -71,18 +95,56 @@ const SelectedRoom: React.FC = () => {
   }, [roomStore.selectedRoom?.messages]);
   return (
     <>
-      {window.location.pathname === "/rooms" ? (
-        <h3>
-          <b className="defaultMessage">{roomStore.selectedRoom?.name}</b>
-        </h3>
-      ) : (
-        <></>
-      )}
-      {roomStore.selectedRoom?.ownerId === userStore.user?.id ? (
-        <AddUserPopup />
-      ) : (
-        <></>
-      )}
+      <div className="roomToolBar">
+        <div className="roomToolBar__hero">
+          {window.location.pathname === "/rooms" ? (
+            <h3 className="banner">
+              <b className="defaultMessage">{roomStore.selectedRoom?.name}</b>
+            </h3>
+          ) : (
+            <></>
+          )}
+
+          {window.location.pathname === "/rooms" && (
+            <div className="toolBar__icon">
+              <Popup
+                ref={initialPopup}
+                id="ellipsisPopup"
+                closeOnDocumentClick={canClose}
+                trigger={<Icon size="large" name="ellipsis vertical" />}
+                basic
+                on="click"
+                position="bottom right"
+              >
+                <ul className="toolBar__options">
+                  <Popup
+                    id="innerPopup"
+                    trigger={<li>Add User</li>}
+                    closeOnDocumentClick={true}
+                    on="click"
+                    basic
+                    onClose={handleClose}
+                    positionFixed
+                    onOpen={() => setCanClose(false)}
+                  >
+                    <AddUserPopup />
+                  </Popup>
+
+                  <li>Rename</li>
+                  <li>Leave</li>
+                  <li>Delete</li>
+                </ul>
+              </Popup>
+            </div>
+          )}
+        </div>
+
+        {/* {roomStore.selectedRoom?.ownerId === userStore.user?.id ? (
+          <AddUserPopup />
+        ) : (
+          <></>
+        )} */}
+      </div>
 
       <div className="messageList">
         <div

@@ -1,6 +1,7 @@
 .messageList {
   border: violet;
   height: 85%;
+  flex: 1;
 }
 * {
   box-sizing: border-box;
@@ -23,6 +24,47 @@
 }
 #message > button {
   background: linear-gradient(136.22deg, #001329 4%, #782493 98.04%);
+}
+.roomToolBar {
+  display: flex;
+  justify-content: center;
+  padding-top: 1em;
+}
+.roomToolBar__hero {
+  display: flex;
+  align-items: center;
+}
+.toolBar__icon {
+  color: white;
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+}
+#ellipsisPopup {
+  background-color: #181830;
+  color: white;
+  border: none;
+  padding: 0.55em;
+}
+#innerPopup {
+  background-color: #181830;
+  border: none;
+  padding: 0;
+}
+.toolBar__options > li:hover {
+  cursor: pointer;
+  opacity: 80%;
+}
+.toolBar__options {
+  list-style-type: none;
+  padding: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+.banner {
+  margin: 0;
 }
 .messagesContainer {
   height: 100%;
@@ -65,7 +107,12 @@
 }
 #userList {
   height: 100%;
+  width: 100% !important;
+  margin: 0 auto;
   overflow-y: scroll;
+}
+#userList::-webkit-scrollbar-track {
+  background: transparent;
 }
 #userList::-webkit-scrollbar-thumb {
   background: linear-gradient(

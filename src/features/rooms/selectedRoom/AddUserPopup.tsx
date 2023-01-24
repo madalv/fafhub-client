@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Popup, Input } from "semantic-ui-react";
+import { Input } from "semantic-ui-react";
 import { observer } from "mobx-react-lite";
 import { store } from "../../../app/stores/store";
 
@@ -26,17 +26,15 @@ const handleAddUser = () => {
 
 const AddUserPopup: React.FC = () => {
   return (
-    <Popup trigger={<button id="addUser">+ User</button>} on="click" inverted>
-      <Input
-        id="emailInput"
-        placeholder="Enter user email"
-        action={{
-          content: "Add",
-          inverted: true,
-          onClick: () => handleAddUser(),
-        }}
-      />
-    </Popup>
+    <Input
+      id="emailInput"
+      placeholder="Enter user email"
+      action={{
+        content: "Add",
+        inverted: true,
+        onClick: () => handleAddUser(),
+      }}
+    />
   );
 };
 

@@ -23,14 +23,15 @@ export default observer(function Rooms() {
       <div className="middleSection">
         <div className="roomLeft">
           <div className="ui search generic__wrapper">
-            <RoomSearchBar />
             <button
               className="roomButton"
               onClick={() => modalStore.openModal(<CreateRoom />)}
             >
               + Room
             </button>
+            <RoomSearchBar />
           </div>
+          <div id="searchResultsContainer"></div>
           <div className="roomListContainer">
             <RoomList />
           </div>

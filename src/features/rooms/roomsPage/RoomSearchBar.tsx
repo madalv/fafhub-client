@@ -38,6 +38,7 @@ const RoomSearchBar: React.FC = () => {
   return (
     <>
       <Input
+        id="searchBar"
         className="searchBar"
         transparent
         focus
