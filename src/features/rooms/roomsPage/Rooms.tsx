@@ -9,8 +9,17 @@ import SelectedRoom from "../selectedRoom/SelectedRoom";
 import UserList from "../selectedRoom/UserList";
 import MessageInput from "../selectedRoom/MessageInput";
 import RoomSearchBar from "./RoomSearchBar";
+import { useEffect, useRef } from "react";
 
 export default observer(function Rooms() {
+  const middleSection = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    middleSection.current?.setAttribute(
+      "style",
+      `min-height:${window.innerHeight * 0.85}px`
+    );
+  }, [middleSection.current?.clientHeight]);
   const { modalStore } = useStore();
   return (
     <div className="roomContainer mainSection">
@@ -20,7 +29,7 @@ export default observer(function Rooms() {
           <UserInfo />
         </div>
       </div>
-      <div className="middleSection">
+      <div className="middleSection" ref={middleSection}>
         <div className="roomLeft">
           <div className="ui search generic__wrapper">
             <button

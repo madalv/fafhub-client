@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Button } from "semantic-ui-react";
 import UserInfo from "../../userinfo/UserInfo";
 import SelectedRoom from "../selectedRoom/SelectedRoom";
@@ -10,7 +10,14 @@ import UserList from "../selectedRoom/UserList";
 const AnnouncementsRoom: React.FC = () => {
   const { userStore, roomStore } = useStore();
   const navigate = useNavigate();
+  const middleSection = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    middleSection.current?.setAttribute(
+      "style",
+      `min-height:${window.innerHeight * 0.8}px`
+    );
+  }, [middleSection.current?.clientHeight]);
   useEffect(() => {
     //console.log(JSON.stringify(roomStore.announcementsRoom))
     roomStore.setSelectedRoom(roomStore.announcementsRoomId).then();
@@ -23,7 +30,7 @@ const AnnouncementsRoom: React.FC = () => {
 
         <UserInfo />
       </div>
-      <div className="middleSection">
+      <div className="middleSection" ref={middleSection}>
         <div className="roomMiddle">
           <SelectedRoom />
         </div>

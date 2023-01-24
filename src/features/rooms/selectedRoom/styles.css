@@ -1,6 +1,6 @@
 .messageList {
   border: violet;
-  height: 85%;
+  max-height: 500px;
   flex: 1;
 }
 * {
